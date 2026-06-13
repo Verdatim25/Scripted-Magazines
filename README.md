@@ -2,7 +2,7 @@
 Scripted Magazines Mod For Stalker Gamma
 # Description  
 Uses the scripted attachments by Lucy to make magazine models match the magazine which is attached to the weapon. No more immersion breaking magazines!  
-Currently this mod is VERY much in the alpha stage, and will definitely evolve as time goes on. Though currently, there should be no issue using this on an existing save. There shouldn't be any drastic changes which will brick a save file.  
+Currently this mod is VERY much in the pre-alpha stage, and will definitely evolve as time goes on. Though currently, there should be no issue using this on an existing save. There shouldn't be any drastic changes which will brick a save file.  
 I would really appreciate any and all help and suggestions, dont be afraid to make a PR or issue! if you dont understand anything dont be afraid to DM or ask me in the Stalker GAMMA server! Thanks a bunch.  
 
 ## Guides are in the configs folder of gamedata
