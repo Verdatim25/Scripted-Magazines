@@ -224,13 +224,13 @@ function actor_on_hud_animation_play(anim_table, obj)
 							local parent_sec = ini_sys:r_string_ex(obj:section(), "parent_section") or obj:section()
 							if parent_sec == "wpn_ak74_pmc" then
 								local speed = tonumber(str_explode( (ini_sys:r_string_ex("scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_out") or ""), "," )[3]) or 1
-								game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_out", true, speed)
+								game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_out", false, speed)
 							end
 						else
 							local parent_sec = ini_sys:r_string_ex(obj:section(), "parent_section") or obj:section()
 							if parent_sec == "wpn_ak74_pmc" then
 								local speed = tonumber(str_explode( (ini_sys:r_string_ex("scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_empty_out") or ""), "," )[3]) or 1
-								game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_empty_out", true, speed)
+								game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_empty_out", false, speed)
 							end
 						end
 					end
@@ -239,14 +239,66 @@ function actor_on_hud_animation_play(anim_table, obj)
 			end
 		end
 		obj:iterate_attachments(iterator)
+		local mag_swap_delay = ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay") or 1.3
+		printf("mag swap delay is %s", mag_swap_delay)
+		CreateTimeEvent("scripted_magazines", "mag_model_swap", mag_swap_delay, change_mag_model, obj:id())
 	else
 		-- if the anim is not a reload then refresh the mag model attachment by calling the function, just in case.
 		apply_scripted_magazines(obj, true)
 	end
 end
-	
-	
 
+function change_mag_model(id)
+	local obj = db.actor:active_item()
+	if not obj then return true end
+	if obj:id() ~= id then return true end
+	if obj:get_state() ~= 7 then return true end
+	wpn_section = obj:section()
+	local wpn = obj
+	local parent_sec = ini_sys:r_string_ex(wpn_section, "parent_section") or wpn_section
+	if not is_weapon_supported(wpn_section) then 
+		printf("weapon is not supported")
+		return true
+	end
+	local new_magazine = pending_magazine or magazines.find_magazine(wpn)
+	-- dump the used variables
+	pending_magazine = nil
+	new_ammo_type = nil
+	local mag_data = get_mag_data(new_magazine and new_magazine:id())
+	if mag_data and mag_data.section and mag_models[mag_data.section] then
+		override_model_path = mag_models[mag_data.section]
+		printf("tried to swap mag models to %s, mag_data.section is %s", override_model_path, mag_data.section)
+		-- im so sorry for this indenting nightmare. im a monster, but this is just to showcase the drum mag anims
+		--
+		if override_model_path == "anomaly_weapons\\s_magazines\\rpk74_drum" then
+			local obj = db.actor:active_item()
+			if obj then
+				local parent_sec = ini_sys:r_string_ex(obj:section(), "parent_section") or obj:section()
+				if parent_sec == "wpn_ak74_pmc" then
+					if obj then
+						if not reload_is_empty then
+							local speed = tonumber(str_explode( (ini_sys:r_string_ex("scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_in") or ""), "," )[3]) or 1
+							game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_in", false, speed)
+							printf("tried to play anm_reload_drum_in, speed is %s", speed)
+						else
+							local speed = tonumber(str_explode( (ini_sys:r_string_ex("scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_empty_in") or ""), "," )[3]) or 1
+							-- currently broken for some unknown reason
+							--game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", "anm_reload_drum_empty_in", true, speed)
+							printf("tried to play anm_reload_drum_empty_in")
+						end
+					end
+				end
+			end
+		end
+		-- now we call the function which will use our new override_model_path to attach the next magazine
+		apply_scripted_magazines(wpn)
+	else
+		printf("%s, %s, %s, %s", new_magazine, mag_data, mag_data and mag_data.section, mag_data and mag_data.section and mag_models[mag_data.section])
+	end
+	return true
+end
+	
+-- marks are HORRIBLE. DONT USE THEM!
 function actor_on_hud_animation_mark(state, mark)
 	-- plays on a motion mark
 	printf("state is %s, mark is %s",state,mark)
@@ -315,7 +367,7 @@ function on_game_start()
 	if not animation_common then
 		RegisterScriptCallback("actor_on_hud_animation_play", actor_on_hud_animation_play)
 	end
-	RegisterScriptCallback("actor_on_hud_animation_mark", actor_on_hud_animation_mark)
+	--RegisterScriptCallback("actor_on_hud_animation_mark", actor_on_hud_animation_mark)
 end
 
 new_ammo_type = nil
