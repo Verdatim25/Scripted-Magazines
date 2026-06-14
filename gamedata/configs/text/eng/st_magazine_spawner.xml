@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<string_table>
+	<string id="st_spawn_magazines">
+		<text>Spawn Magazines</text>
+	</string>
+	
+	<string id="st_spawn_ammo">
+		<text>Spawn Ammo</text>
+	</string>
+	
+</string_table>
