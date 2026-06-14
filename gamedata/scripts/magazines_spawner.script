@@ -1,0 +1,65 @@
+-- verdatim, adds a context menu that allows the spawning of magazines
+
+if not magazine_binder then return end
+
+-- from magazine_binder.script
+local look_up_table 	= ini_file_ex("magazines\\lookups.ltx")
+local weapons_lookup 	= ini_file_ex("magazines\\weapons\\importer.ltx")
+local loadout_lookup 	= ini_file_ex("magazines\\outfitloadouts\\importer.ltx")
+
+is_supported_weapon = magazine_binder.is_supported_weapon
+
+function MagazinesSpawnerCondition(obj, bag, mode)
+	if is_supported_weapon(obj) and DEV_DEBUG then
+		return true
+	end
+end
+
+function MagazinesSpawnerName(obj, bag, mode)
+	return game.translate_string("st_spawn_magazines")
+end
+
+function MagazinesSpawnerAction(obj, bag, mode)
+	local object_section = obj and obj:section()
+	-- yeah this system is confusing af
+	local base_type = magazine_binder.get_weapon_base_type(obj)
+	local mags_tbl = {}
+	local function iterator(section)
+		if ini_sys:r_string_ex(section, "is_mag") then
+			if ini_sys:r_string_ex(section, "base_type") == base_type then
+				mags_tbl[#mags_tbl + 1] = section
+			end
+		end
+	end
+	
+	ini_sys:section_for_each(iterator)
+	
+	for i, section in pairs(mags_tbl) do
+		give_object_to_actor(section, 1)
+	end
+end
+
+function AmmoSpawnerCondition(obj, bag, mode)
+	if obj:is_weapon() and DEV_DEBUG then
+		return true
+	end
+end
+
+function AmmoSpawnerName(obj, bag, mode)
+	return game.translate_string("st_spawn_ammo")
+end
+
+function AmmoSpawnerAction(obj, bag, mode)
+	local object_section = obj and obj:section()
+	local ammos = ini_sys:r_string_ex(object_section, "ammo_class") or ""
+	ammos = str_explode(ammos, ",")
+	for i,section in pairs(ammos) do
+		if not ((string.find(section, "bad", #section - 3)) or (string.find(section, "verybad", #section - 7))) then
+			give_object_to_actor(section, 10)
+		end
+	end
+end
+
+local add_functor = custom_functor_autoinject.add_functor
+add_functor("MagazinesSpawner", MagazinesSpawnerCondition, MagazinesSpawnerName, nil, MagazinesSpawnerAction, false)
+add_functor("AmmosSpawner", AmmoSpawnerCondition, AmmoSpawnerName, nil, AmmoSpawnerAction, false)
