@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ; just some base stuff for certain animation sets
 @[nikolas_ak_reanims]
 
@@ -1722,3 +1723,1729 @@ s_magazine_parent_bone_magazin = magazin
 ; wpn_vssk : HUD .ogf not found - set s_magazine_hide_bones by hand
 ; ![wpn_vssk]
 ; s_magazine_hide_bones = magazin
+=======
+; just some base stuff for certain animation sets
+@[nikolas_ak_reanims]
+
+; this section tells the script which bones to hide
+s_magazine_hide_bones = magazin, magazin_empty
+
+; this tells the script the position, rotation, scale and parent bone for the attachment FOR THIS SPECIFIC MAG BONE
+; It goes "s_magazine_positions_[BONE_NAME]"
+; so later if the mag bone name is say "mag" or "mag60" we need that name to be at the end
+; DONT FORGET THIS WHEN ADDING STUFF!! 
+s_magazine_positions_magazin = 0.001,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0.001,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+anm_reload_mag_swap_delay = 1.333
+anm_reload_empty_mag_swap_delay = 1.333
+
+@[bas_eft_ins_ak_anims]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0.0085,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 0.8444
+anm_reload_empty_mag_swap_delay = 0.8444
+
+![wpn_ak74_pmc]:bas_eft_ins_ak_anims
+
+![wpn_rpk74_16]:bas_eft_ins_ak_anims
+
+![wpn_rpk74_16_drum]
+
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0.04,-0.005
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 0.95
+s_magazine_parent_bone_mag = mag
+
+anm_reload_mag_swap_delay = 0.8
+anm_reload_empty_mag_swap_delay = 0.8
+
+![wpn_ak105]:nikolas_ak_reanims
+
+![wpn_ak74m_beard]:nikolas_ak_reanims
+
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0.003,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0.001,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+![wpn_ak74u]:nikolas_ak_reanims
+
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0,0,0.002
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 0.95
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0.001,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+![wpn_ak74]
+
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0.0005,0,0.002
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 0.95
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0.001,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+![wpn_ak105_shakal]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0.001,-0.003,0.0045
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 1.25
+anm_reload_empty_mag_swap_delay = 1.45
+
+![wpn_ak74u_tac]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,-0.003,0.0045
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 1.25
+anm_reload_empty_mag_swap_delay = 1.45
+
+![wpn_ak74u_isg]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,-0.003,0.0045
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 1.25
+anm_reload_empty_mag_swap_delay = 1.45
+
+![wpn_ak74_isg]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0.003,-0.003,0.0045
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 1.25
+anm_reload_empty_mag_swap_delay = 1.45
+
+![wpn_ak74m_n]:bas_eft_ins_ak_anims
+
+![wpn_ak74m]:nikolas_ak_reanims
+
+![wpn_groza_nimble]
+s_magazine_hide_bones = mag60
+
+s_magazine_positions_mag60 = 0.005,0.002,0.0065
+s_magazine_rotations_mag60 = 0,0,0
+s_magazine_scale_mag60 = 0.95
+s_magazine_parent_bone_mag60 = mag60
+
+anm_reload_mag_swap_delay = 1.3
+anm_reload_empty_mag_swap_delay = 1.3
+
+
+![wpn_ak74_pmc_hud]
+
+	!base_hud_offset_pos             
+	!base_hud_offset_pos_16x9       
+	!base_hud_offset_rot            
+	!base_hud_offset_rot_16x9         
+
+; DRUM MAG ANIMATION TEST SECTION
+@[scripted_magazines_hand_reload_animations_hud]:hud_base
+
+; This section basically copies the hand position and orientation of the ak74 pmc so we can seamlessly use the anims here instead for the left hand
+
+	hands_orientation                = 0.011688, 0.003882, 0
+	hands_orientation_16x9           = 0.011688, 0.003882, 0
+	hands_position                   = 0.020726, -0.004787, -0.165
+	hands_position_16x9              = 0.020726, -0.004787, -0.165
+	
+	; hands_orientation                = 0.011688, 0.003882, 0.096141
+	; hands_orientation_16x9           = 0.011688, 0.003882, 0.096141
+	; hands_position                   = 0.001956, -0.0196347, -0.143979
+	; hands_position_16x9              = 0.001956, -0.0196347, -0.143979
+	
+	aim_hud_offset_pos               = -0.086188, 0.034411, -0.06
+	aim_hud_offset_pos_16x9          = -0.086188, 0.034411, -0.06
+	aim_hud_offset_rot               = -6e-06, 0.000278, 0
+	aim_hud_offset_rot_16x9          = -6e-06, 0.000278, 0
+
+	aim_hud_offset_alt_pos           = -0.147928, -0.060316, -0.02
+	aim_hud_offset_alt_pos_16x9      = -0.147928, -0.060316, -0.02
+	aim_hud_offset_alt_rot           = -6e-06, 0.000278, 0.6
+	aim_hud_offset_alt_rot_16x9      = -6e-06, 0.000278, 0.6
+
+	base_hud_offset_pos              = -0.01877, -0.014956, 0.021021
+	base_hud_offset_pos_16x9         = -0.01877, -0.014956, 0.021021
+	base_hud_offset_rot              = 0, 0, 0.096141
+	base_hud_offset_rot_16x9         = 0, 0, 0.096141
+
+; this item is literally a triangle 1000 meters behind the player, closest i could get to an empty object
+	item_visual = anomaly_weapons\empty_object
+
+; my edited animations to make em work for the mag out / mag in for the ak 74 pmc
+	anm_reload_drum_empty_out = svds_pmc_ins_vgrip_reload_empty_drum_out, idle
+	anm_reload_drum_empty_in = svds_pmc_ins_vgrip_reload_empty_drum_in, idle
+
+	anm_reload_drum_out = ak74_eft_ins_vgrip_reload_drum_out, idle, 1.5
+	anm_reload_drum_in = ak74_eft_ins_vgrip_reload_drum_mag_in, idle, 1.5
+
+; =====================================================================
+; merged from the offline generator - placeholder offsets (0,0,0/scale 1),
+; swap delays still TODO. Tune per weapon in game.
+; =====================================================================
+
+![wpn_9a91]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_abakan_n]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ace52]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_adar2_15]
+s_magazine_hide_bones = mag_group, wpn_magazine
+
+s_magazine_positions_mag_group = 0,0,0
+s_magazine_rotations_mag_group = 0,0,0
+s_magazine_scale_mag_group = 1
+s_magazine_parent_bone_mag_group = mag_group
+
+s_magazine_positions_wpn_magazine = 0,0,0
+s_magazine_rotations_wpn_magazine = 0,0,0
+s_magazine_scale_wpn_magazine = 1
+s_magazine_parent_bone_wpn_magazine = wpn_magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak101]
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak103]
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak104_alfa]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak105_swamp]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak12_m1]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak5c_bas]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ak74u_m1_isg]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_akm_alfa]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_akm_isg]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_akms_alt]
+s_magazine_hide_bones = magazin, magazin_empty
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_amb17]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_aps]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ash12]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_aug]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_aug_freedom]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_aug_merc]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_bizon]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_brn180]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_colt1911_camo]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_colt1911_custom]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_colt1911_n]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_desert_eagle]
+s_magazine_hide_bones = magazine1, magazine2
+
+s_magazine_positions_magazine1 = 0,0,0
+s_magazine_rotations_magazine1 = 0,0,0
+s_magazine_scale_magazine1 = 1
+s_magazine_parent_bone_magazine1 = magazine1
+
+s_magazine_positions_magazine2 = 0,0,0
+s_magazine_rotations_magazine2 = 0,0,0
+s_magazine_scale_magazine2 = 1
+s_magazine_parent_bone_magazine2 = magazine2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_dtmdr_black]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_dvl10]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_dvl10_m1]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fal_aus]
+s_magazine_hide_bones = mag, mag_2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag_2 = 0,0,0
+s_magazine_rotations_mag_2 = 0,0,0
+s_magazine_scale_mag_2 = 1
+s_magazine_parent_bone_mag_2 = mag_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fal_sa58_osw]
+s_magazine_hide_bones = mag, mag_2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag_2 = 0,0,0
+s_magazine_rotations_mag_2 = 0,0,0
+s_magazine_scale_mag_2 = 1
+s_magazine_parent_bone_mag_2 = mag_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fn2000_nimble]
+s_magazine_hide_bones = magazin, magazin2
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin2 = 0,0,0
+s_magazine_rotations_magazin2 = 0,0,0
+s_magazine_scale_magazin2 = 1
+s_magazine_parent_bone_magazin2 = magazin2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fn57]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fnp45]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fnx45_custom]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fort]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_fort17]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_g36ka4_rwap]
+s_magazine_hide_bones = mag30, mag30_2
+
+s_magazine_positions_mag30 = 0,0,0
+s_magazine_rotations_mag30 = 0,0,0
+s_magazine_scale_mag30 = 1
+s_magazine_parent_bone_mag30 = mag30
+
+s_magazine_positions_mag30_2 = 0,0,0
+s_magazine_rotations_mag30_2 = 0,0,0
+s_magazine_scale_mag30_2 = 1
+s_magazine_parent_bone_mag30_2 = mag30_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_g36v_rwap]
+s_magazine_hide_bones = mag30, mag30_2
+
+s_magazine_positions_mag30 = 0,0,0
+s_magazine_rotations_mag30 = 0,0,0
+s_magazine_scale_mag30 = 1
+s_magazine_parent_bone_mag30 = mag30
+
+s_magazine_positions_mag30_2 = 0,0,0
+s_magazine_rotations_mag30_2 = 0,0,0
+s_magazine_scale_mag30_2 = 1
+s_magazine_parent_bone_mag30_2 = mag30_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_glock]
+s_magazine_hide_bones = magazin_1, magazin_2
+
+s_magazine_positions_magazin_1 = 0,0,0
+s_magazine_rotations_magazin_1 = 0,0,0
+s_magazine_scale_magazin_1 = 1
+s_magazine_parent_bone_magazin_1 = magazin_1
+
+s_magazine_positions_magazin_2 = 0,0,0
+s_magazine_rotations_magazin_2 = 0,0,0
+s_magazine_scale_magazin_2 = 1
+s_magazine_parent_bone_magazin_2 = magazin_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_glock17_m1]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_glock_modern]
+s_magazine_hide_bones = magazin_1, magazin_2
+
+s_magazine_positions_magazin_1 = 0,0,0
+s_magazine_rotations_magazin_1 = 0,0,0
+s_magazine_scale_magazin_1 = 1
+s_magazine_parent_bone_magazin_1 = magazin_1
+
+s_magazine_positions_magazin_2 = 0,0,0
+s_magazine_rotations_magazin_2 = 0,0,0
+s_magazine_scale_magazin_2 = 1
+s_magazine_parent_bone_magazin_2 = magazin_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_grot_tan]
+s_magazine_hide_bones = magazines, mag, mag2
+
+s_magazine_positions_magazines = 0,0,0
+s_magazine_rotations_magazines = 0,0,0
+s_magazine_scale_magazines = 1
+s_magazine_parent_bone_magazines = magazines
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_groza]
+s_magazine_hide_bones = mag30, mag45, mag45_black, mag60, mag75, mag_20
+
+s_magazine_positions_mag30 = 0,0,0
+s_magazine_rotations_mag30 = 0,0,0
+s_magazine_scale_mag30 = 1
+s_magazine_parent_bone_mag30 = mag30
+
+s_magazine_positions_mag45 = 0,0,0
+s_magazine_rotations_mag45 = 0,0,0
+s_magazine_scale_mag45 = 1
+s_magazine_parent_bone_mag45 = mag45
+
+s_magazine_positions_mag45_black = 0,0,0
+s_magazine_rotations_mag45_black = 0,0,0
+s_magazine_scale_mag45_black = 1
+s_magazine_parent_bone_mag45_black = mag45_black
+
+s_magazine_positions_mag60 = 0,0,0
+s_magazine_rotations_mag60 = 0,0,0
+s_magazine_scale_mag60 = 1
+s_magazine_parent_bone_mag60 = mag60
+
+s_magazine_positions_mag75 = 0,0,0
+s_magazine_rotations_mag75 = 0,0,0
+s_magazine_scale_mag75 = 1
+s_magazine_parent_bone_mag75 = mag75
+
+s_magazine_positions_mag_20 = 0,0,0
+s_magazine_rotations_mag_20 = 0,0,0
+s_magazine_scale_mag_20 = 1
+s_magazine_parent_bone_mag_20 = mag_20
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_hk21]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_howa20]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_k98_mod]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_kiparis]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_korth_custom]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_kriss_vector]
+s_magazine_hide_bones = wpn_mag
+
+s_magazine_positions_wpn_mag = 0,0,0
+s_magazine_rotations_wpn_mag = 0,0,0
+s_magazine_scale_wpn_mag = 1
+s_magazine_parent_bone_wpn_mag = wpn_mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_l85_m2]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_m249]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_m4_ru556]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_m4_tac]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_m4a1_siber]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_m98b]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mac10]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mk47]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mp5]
+s_magazine_hide_bones = master_mag, mag, mag2
+
+s_magazine_positions_master_mag = 0,0,0
+s_magazine_rotations_master_mag = 0,0,0
+s_magazine_scale_master_mag = 1
+s_magazine_parent_bone_master_mag = master_mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mp5_nimble]
+s_magazine_hide_bones = master_mag, mag, mag2
+
+s_magazine_positions_master_mag = 0,0,0
+s_magazine_rotations_master_mag = 0,0,0
+s_magazine_scale_master_mag = 1
+s_magazine_parent_bone_master_mag = master_mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mp5sd]
+s_magazine_hide_bones = master_mag, mag, mag2
+
+s_magazine_positions_master_mag = 0,0,0
+s_magazine_rotations_master_mag = 0,0,0
+s_magazine_scale_master_mag = 1
+s_magazine_parent_bone_master_mag = master_mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mp7]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_mp9]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_oc33]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_p90_gs]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_p90gamma]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_pb]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_pl15_tan]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_pm]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_pm_custom]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_pp2000]
+s_magazine_hide_bones = magazin, magazin2
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin2 = 0,0,0
+s_magazine_rotations_magazin2 = 0,0,0
+s_magazine_scale_magazin2 = 1
+s_magazine_parent_bone_magazin2 = magazin2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_raptr]
+s_magazine_hide_bones = magazin, magazine_belt_hook
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazine_belt_hook = 0,0,0
+s_magazine_rotations_magazine_belt_hook = 0,0,0
+s_magazine_scale_magazine_belt_hook = 1
+s_magazine_parent_bone_magazine_belt_hook = magazine_belt_hook
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_remington700]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_remington700_lapua700]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_remington700_magpul_pro]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_rpd]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_rpk]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_saiga12s_isg]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_saiga12s_m1]
+s_magazine_hide_bones = magazine, magazine_ammo1, magazine_ammo2, magazine_poddon, magazine2, mag2_ammo, mag2_poddon
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+s_magazine_positions_magazine_ammo1 = 0,0,0
+s_magazine_rotations_magazine_ammo1 = 0,0,0
+s_magazine_scale_magazine_ammo1 = 1
+s_magazine_parent_bone_magazine_ammo1 = magazine_ammo1
+
+s_magazine_positions_magazine_ammo2 = 0,0,0
+s_magazine_rotations_magazine_ammo2 = 0,0,0
+s_magazine_scale_magazine_ammo2 = 1
+s_magazine_parent_bone_magazine_ammo2 = magazine_ammo2
+
+s_magazine_positions_magazine_poddon = 0,0,0
+s_magazine_rotations_magazine_poddon = 0,0,0
+s_magazine_scale_magazine_poddon = 1
+s_magazine_parent_bone_magazine_poddon = magazine_poddon
+
+s_magazine_positions_magazine2 = 0,0,0
+s_magazine_rotations_magazine2 = 0,0,0
+s_magazine_scale_magazine2 = 1
+s_magazine_parent_bone_magazine2 = magazine2
+
+s_magazine_positions_mag2_ammo = 0,0,0
+s_magazine_rotations_mag2_ammo = 0,0,0
+s_magazine_scale_mag2_ammo = 1
+s_magazine_parent_bone_mag2_ammo = mag2_ammo
+
+s_magazine_positions_mag2_poddon = 0,0,0
+s_magazine_rotations_mag2_poddon = 0,0,0
+s_magazine_scale_mag2_poddon = 1
+s_magazine_parent_bone_mag2_poddon = mag2_poddon
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_saiga12s_m2]
+s_magazine_hide_bones = magazine, magazine_ammo1, magazine_ammo2, magazine_poddon, magazine2, mag2_ammo, mag2_poddon
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+s_magazine_positions_magazine_ammo1 = 0,0,0
+s_magazine_rotations_magazine_ammo1 = 0,0,0
+s_magazine_scale_magazine_ammo1 = 1
+s_magazine_parent_bone_magazine_ammo1 = magazine_ammo1
+
+s_magazine_positions_magazine_ammo2 = 0,0,0
+s_magazine_rotations_magazine_ammo2 = 0,0,0
+s_magazine_scale_magazine_ammo2 = 1
+s_magazine_parent_bone_magazine_ammo2 = magazine_ammo2
+
+s_magazine_positions_magazine_poddon = 0,0,0
+s_magazine_rotations_magazine_poddon = 0,0,0
+s_magazine_scale_magazine_poddon = 1
+s_magazine_parent_bone_magazine_poddon = magazine_poddon
+
+s_magazine_positions_magazine2 = 0,0,0
+s_magazine_rotations_magazine2 = 0,0,0
+s_magazine_scale_magazine2 = 1
+s_magazine_parent_bone_magazine2 = magazine2
+
+s_magazine_positions_mag2_ammo = 0,0,0
+s_magazine_rotations_mag2_ammo = 0,0,0
+s_magazine_scale_mag2_ammo = 1
+s_magazine_parent_bone_mag2_ammo = mag2_ammo
+
+s_magazine_positions_mag2_poddon = 0,0,0
+s_magazine_rotations_mag2_poddon = 0,0,0
+s_magazine_scale_mag2_poddon = 1
+s_magazine_parent_bone_mag2_poddon = mag2_poddon
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_scar_siber]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sig220_n]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sig226]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sig550]
+s_magazine_hide_bones = mag30, mag30_2
+
+s_magazine_positions_mag30 = 0,0,0
+s_magazine_rotations_mag30 = 0,0,0
+s_magazine_scale_mag30 = 1
+s_magazine_parent_bone_mag30 = mag30
+
+s_magazine_positions_mag30_2 = 0,0,0
+s_magazine_rotations_mag30_2 = 0,0,0
+s_magazine_scale_mag30_2 = 1
+s_magazine_parent_bone_mag30_2 = mag30_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sig550_custom]
+s_magazine_hide_bones = mag30, mag30_2
+
+s_magazine_positions_mag30 = 0,0,0
+s_magazine_rotations_mag30 = 0,0,0
+s_magazine_scale_mag30 = 1
+s_magazine_parent_bone_mag30 = mag30
+
+s_magazine_positions_mag30_2 = 0,0,0
+s_magazine_rotations_mag30_2 = 0,0,0
+s_magazine_scale_mag30_2 = 1
+s_magazine_parent_bone_mag30_2 = mag30_2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sks_molot]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sr1m]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sr2_m1]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sr2_veresk]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_steyr_scout_big]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_sv98]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_svd_m1]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_svds]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_svds_pmc]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_svt40]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_svu]
+s_magazine_hide_bones = magazin, magfeed
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magfeed = 0,0,0
+s_magazine_rotations_magfeed = 0,0,0
+s_magazine_scale_magfeed = 1
+s_magazine_parent_bone_magfeed = magfeed
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_thompson_1921]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_thompson_m1a1]
+s_magazine_hide_bones = mag
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_toz106_m1]
+s_magazine_hide_bones = magazine
+
+s_magazine_positions_magazine = 0,0,0
+s_magazine_rotations_magazine = 0,0,0
+s_magazine_scale_magazine = 1
+s_magazine_parent_bone_magazine = magazine
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_tt33_modern]
+s_magazine_hide_bones = mag, mag2
+
+s_magazine_positions_mag = 0,0,0
+s_magazine_rotations_mag = 0,0,0
+s_magazine_scale_mag = 1
+s_magazine_parent_bone_mag = mag
+
+s_magazine_positions_mag2 = 0,0,0
+s_magazine_rotations_mag2 = 0,0,0
+s_magazine_scale_mag2 = 1
+s_magazine_parent_bone_mag2 = mag2
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_udp9]
+s_magazine_hide_bones = mags, magazin2, magazin
+
+s_magazine_positions_mags = 0,0,0
+s_magazine_rotations_mags = 0,0,0
+s_magazine_scale_mags = 1
+s_magazine_parent_bone_mags = mags
+
+s_magazine_positions_magazin2 = 0,0,0
+s_magazine_rotations_magazin2 = 0,0,0
+s_magazine_scale_magazin2 = 1
+s_magazine_parent_bone_magazin2 = magazin2
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_ump45_custom]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_usp_tac_45]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_val]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_vihr]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_vintorez_isg]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_vintorez_n1]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_vityaz]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_vz61]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_walther_p99]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+![wpn_xm4]
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+; anm_reload_mag_swap_delay = 1.3
+; anm_reload_empty_mag_swap_delay = 1.3
+
+; ===================== NEEDS MANUAL WORK (inert) ======================
+; no usable mesh/bone found by the generator. Commented so they do not
+; mis-attach. Get the bone in game (dev tool NUM7), then uncomment + fill.
+; =====================================================================
+
+; wpn_aek : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_aek]
+; s_magazine_hide_bones = magazin
+
+; wpn_beretta_camo : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_beretta_camo]
+; s_magazine_hide_bones = magazin
+
+; wpn_l96a1m : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_l96a1m]
+; s_magazine_hide_bones = magazin
+
+; wpn_mp443 : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_mp443]
+; s_magazine_hide_bones = magazin
+
+; wpn_pkm_siber : no mag bone matched in wpn_pkm_siber_hud.ogf - pick from bones below by hand
+; bones: wpn_body, body, ammobox, box_cover, bullet_1, bullet_10, bullet_11, bullet_12, bullet_2, bullet_3, bullet_4, bullet_5, bullet_6, bullet_7, bullet_8, bullet_9, epmty, epmty_1, epmty_2, epmty_3, epmty_4, epmty_5, epmty_6, epmty_7, epmty_8, epmty_9, epmty_10, epmty_11, epmty_12, lock, bipod, bipod_1, bipod_2, cover, bulletcover, bulletshield, button, lens, cover_2, ejector, gilza, handle, handle_2, muzzle, trigger, wpn_silencer, zatvor, zatvor_2
+; ![wpn_pkm_siber]
+; s_magazine_hide_bones = magazin
+
+; wpn_pkp_siber : no mag bone matched in wpn_pkp_siber_hud.ogf - pick from bones below by hand
+; bones: wpn_body, body, ammobox, box_cover, bullet_10, bullet_11, bullet_12, bullet_4, bullet_5, bullet_6, bullet_7, bullet_8, bullet_9, epmty, epmty_1, epmty_2, epmty_3, epmty_4, epmty_5, epmty_6, epmty_7, epmty_8, epmty_9, epmty_10, epmty_11, epmty_12, lock, bipod, bipod_1, bipod_2, bracket, lens, cover, bulletcover, bulletshield, button, cover_2, ejector, fix_bracket, gilza, handle, handle_2, muzzle, trigger, wpn_silencer, zatvor, zatvor_2
+; ![wpn_pkp_siber]
+; s_magazine_hide_bones = magazin
+
+; wpn_ppsh41 : no mag bone matched in wpn_ppsh41_hud.ogf - pick from bones below by hand
+; bones: wpn_body, body, beben, casing, gilza, muzzle, trigger, wpn_silencer, zatvor
+; ![wpn_ppsh41]
+; s_magazine_hide_bones = magazin
+
+; wpn_sr25 : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_sr25]
+; s_magazine_hide_bones = magazin
+
+; wpn_vssk : HUD .ogf not found - set s_magazine_hide_bones by hand
+; ![wpn_vssk]
+; s_magazine_hide_bones = magazin
+>>>>>>> andtheherois-dev

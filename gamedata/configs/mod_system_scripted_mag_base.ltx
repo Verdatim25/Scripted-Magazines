@@ -1,0 +1,72 @@
+; just some base stuff for certain animation sets
+@[nikolas_ak_reanims]
+
+; this section tells the script which bones to hide
+s_magazine_hide_bones = magazin, magazin_empty
+
+;=============================================================================
+; this tells the script the position, rotation, scale and parent bone for the attachment FOR THIS SPECIFIC MAG BONE
+; It goes  s_magazine_positions_[BONE_NAME] 
+; so later if the mag bone name is say  mag  or  mag60  we need that name to be at the end
+; DONT FORGET THIS WHEN ADDING STUFF!! 
+;=============================================================================
+
+s_magazine_positions_magazin = 0.001,0,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin_empty = 0.001,0,0
+s_magazine_rotations_magazin_empty = 0,0,0
+s_magazine_scale_magazin_empty = 1
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+anm_reload_mag_swap_delay = 1.333
+anm_reload_empty_mag_swap_delay = 1.333
+
+;=============================================================================
+@[bas_eft_ins_ak_anims]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0,0.0085,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 0.8444
+anm_reload_empty_mag_swap_delay = 0.8444
+
+;=============================================================================
+@[ak12_sed_reanim]
+s_magazine_hide_bones = magazin, magazin1
+
+s_magazine_positions_magazin = 0.0009,0.0085,0
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 0.97
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay_magazin = 2.25
+anm_reload_empty_mag_swap_delay_magazin = 2
+
+s_magazine_positions_magazin1 = 0.0009,0.0085,0
+s_magazine_rotations_magazin1 = 0,0,0
+s_magazine_scale_magazin1 = 0.97
+s_magazine_parent_bone_magazin1 = magazin1
+
+anm_reload_mag_swap_delay_magazin1 = 0
+anm_reload_empty_mag_swap_delay_magazin1 = 0
+
+;=============================================================================
+@[aks74u_tac_anim_params]
+
+s_magazine_hide_bones = magazin
+
+s_magazine_positions_magazin = 0.001,-0.003,0.0045
+s_magazine_rotations_magazin = 0,0,0
+s_magazine_scale_magazin = 1
+s_magazine_parent_bone_magazin = magazin
+
+anm_reload_mag_swap_delay = 1.25
+anm_reload_empty_mag_swap_delay = 1.45
+
