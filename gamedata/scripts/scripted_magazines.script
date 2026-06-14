@@ -229,7 +229,7 @@ function update_scripted_magazines(obj, configs)
 		local mag_section = magazine.section
 		
 		-- find the magazine model path
-		magazine_model_path = mag_models[mag_section]
+		magazine_model_path = ini_sys:r_string_ex(mag_section, "s_magazine_model") or mag_models[mag_section] or "anomaly_weapons\\empty_object"
 		
 		printf("model path is %s", magazine_model_path)
 		
@@ -358,7 +358,7 @@ function actor_on_hud_animation_play(anim_table, obj)
 			configs.bone_to_switch = name
 			local new_magazine = pending_magazine or magazines.find_magazine(obj)
 			local mag_data = get_mag_data(new_magazine and new_magazine:id())
-			configs.model_path = mag_models[mag_data.section]
+			configs.model_path = ini_sys:r_string_ex((mag_data and mag_data.section) or "", "s_magazine_model") or mag_models[mag_data and mag_data.section] or "anomaly_weapons\\empty_object"
 			printf("mag swap delay is %s, bone name is %s, new model is %s", mag_swap_delay, name, configs.model_path)
 			CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
 		end
