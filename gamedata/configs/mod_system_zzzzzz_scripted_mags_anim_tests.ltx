@@ -1,0 +1,47 @@
+![wpn_ak74_pmc_hud]
+
+	!base_hud_offset_pos             
+	!base_hud_offset_pos_16x9       
+	!base_hud_offset_rot            
+	!base_hud_offset_rot_16x9       
+
+; DRUM MAG ANIMATION TEST SECTION
+@[scripted_magazines_hand_reload_animations_hud]:hud_base
+
+; This section basically copies the hand position and orientation of the ak74 pmc so we can seamlessly use the anims here instead for the left hand
+
+	hands_orientation                = 0.011688, 0.003882, 0
+	hands_orientation_16x9           = 0.011688, 0.003882, 0
+	hands_position                   = 0.020726, -0.004787, -0.165
+	hands_position_16x9              = 0.020726, -0.004787, -0.165
+	
+	; hands_orientation                = 0.011688, 0.003882, 0.096141
+	; hands_orientation_16x9           = 0.011688, 0.003882, 0.096141
+	; hands_position                   = 0.001956, -0.0196347, -0.143979
+	; hands_position_16x9              = 0.001956, -0.0196347, -0.143979
+	
+	aim_hud_offset_pos               = -0.086188, 0.034411, -0.06
+	aim_hud_offset_pos_16x9          = -0.086188, 0.034411, -0.06
+	aim_hud_offset_rot               = -6e-06, 0.000278, 0
+	aim_hud_offset_rot_16x9          = -6e-06, 0.000278, 0
+
+	aim_hud_offset_alt_pos           = -0.147928, -0.060316, -0.02
+	aim_hud_offset_alt_pos_16x9      = -0.147928, -0.060316, -0.02
+	aim_hud_offset_alt_rot           = -6e-06, 0.000278, 0.6
+	aim_hud_offset_alt_rot_16x9      = -6e-06, 0.000278, 0.6
+
+	base_hud_offset_pos              = -0.01877, -0.014956, 0.021021
+	base_hud_offset_pos_16x9         = -0.01877, -0.014956, 0.021021
+	base_hud_offset_rot              = 0, 0, 0.096141
+	base_hud_offset_rot_16x9         = 0, 0, 0.096141
+
+; this item is literally a triangle 1000 meters behind the player, closest i could get to an empty object
+	item_visual = anomaly_weapons\empty_object
+
+; my edited animations to make em work for the mag out / mag in for the ak 74 pmc
+	anm_reload_drum_empty_out = svds_pmc_ins_vgrip_reload_empty_drum_out, idle
+	anm_reload_drum_empty_in = svds_pmc_ins_vgrip_reload_empty_drum_in, idle
+
+	anm_reload_drum_out = ak74_eft_ins_vgrip_reload_drum_out, idle, 1.5
+	anm_reload_drum_in = ak74_eft_ins_vgrip_reload_drum_mag_in, idle, 1.5
+

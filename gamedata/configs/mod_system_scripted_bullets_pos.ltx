@@ -1,0 +1,58 @@
+@[mag_ak_5.45x39_default_ammo_configs]
+; it goes s_magazine_bullet_[section_of_bullet]
+; base is used if bullet section doesnt match any below
+
+s_magazine_bullet_base = dynamics\wpn\scripted_mags\bullets\545x39\545x39_PS
+
+s_magazine_bullet_ammo_5.45x39_fmj = dynamics\wpn\scripted_mags\bullets\545x39\545x39_PS
+
+s_magazine_bullet_ammo_5.45x39_ep = dynamics\wpn\scripted_mags\bullets\545x39\545x39_HP
+
+s_magazine_bullet_ammo_5.45x39_ap = dynamics\wpn\scripted_mags\bullets\545x39\545x39_BP
+
+; position of the first bullet in the stack, the second, the third, and so forth for an arbitrary amount
+; if bullet pos isnt found (for some reason) it uses s_magazine_bullet_pos_base. 
+; if base isnt found, it will use 0,0,0
+; the script will stop placing bullets if it finds that the next s_magazine_bullet_pos_[number] isnt listed
+s_magazine_bullet_pos_base = -0.00391, 0.060064, -0.014595
+s_magazine_bullet_pos_1 = -0.00391, 0.060064, -0.014595
+s_magazine_bullet_pos_2 = 0.004177, 0.055283, -0.014595
+s_magazine_bullet_pos_3 = -0.00391, 0.048306, -0.014595
+s_magazine_bullet_pos_4 = 0.004177, 0.045881, -0.014595
+s_magazine_bullet_pos_5 = -0.00391, 0.039799, -0.014595
+
+; rotation of the first bullet in the stack, the second, the third, and so forth for an arbitrary amount
+; if bullet rot isnt listed, it will use s_magazine_bullet_rot_base
+; if base isnt found, it will use 0,0,0
+; unlike bullet_pos, this doesnt need to be defined for each bullet, the script will use base if it cant find the rot and will continue placing bullets until the last s_magazine_bullet_pos_[number]
+; this also means you can skip a number if you want to; like listing rot for bullet 1 and then for bullet 10
+s_magazine_bullet_rot_base = 0,0,0
+s_magazine_bullet_rot_1 = 0, 0, 0
+s_magazine_bullet_rot_2 = 0, 0, 0
+s_magazine_bullet_rot_3 = 0, 0, 0
+s_magazine_bullet_rot_4 = 0, 0, 0
+s_magazine_bullet_rot_5 = 0, 0, 0
+
+; scale of the first bullet in the stack, the second, the third, and so forth for an arbitrary amount
+; if bullet scale isnt listed, it will use s_magazine_bullet_scale_base
+; if base isnt found, it will use 1
+; unlike bullet_pos, this doesnt need to be defined for each bullet, the script will use base if it cant find the scale and will continue placing bullets until the last s_magazine_bullet_pos_[number]
+; this also means you can skip a number if you want to; like listing scale for bullet 1 and then for bullet 10
+s_magazine_bullet_scale_base = 1
+s_magazine_bullet_scale_1 = 1
+s_magazine_bullet_scale_2 = 1
+s_magazine_bullet_scale_3 = 1
+s_magazine_bullet_scale_4 = 1
+s_magazine_bullet_scale_5 = 1
+
+; parent_bone of the first bullet in the stack, the second, the third, and so forth for an arbitrary amount OF the scripted magazine, not the weapon object!
+; if bullet parent_bone isnt listed, it will use s_magazine_bullet_parent_bone_base
+; if base isnt found, it will use "magazin"
+; unlike bullet_pos, this doesnt need to be defined for each bullet, the script will use base if it cant find the parent_bone and will continue placing bullets until the last s_magazine_bullet_pos_[number]
+; this also means you can skip a number if you want to; like listing parent_bone for bullet 1 and then for bullet 10
+s_magazine_bullet_parent_bone_base = magazin
+s_magazine_bullet_parent_bone_1 = magazin
+s_magazine_bullet_parent_bone_2 = magazin
+s_magazine_bullet_parent_bone_3 = magazin
+s_magazine_bullet_parent_bone_4 = magazin
+s_magazine_bullet_parent_bone_5 = magazin
