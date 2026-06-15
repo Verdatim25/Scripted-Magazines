@@ -1,0 +1,86 @@
+-- Mags Reloaded (ATHI) ammo wheel integration for Scripted Magazines
+
+if not (magazines and magazine_binder and magazines_mcm) then return end
+
+local eject				= magazines.eject_magazine
+local create_time_event	= magazines.create_time_event
+
+-- Shared reload path for the ammo wheel (SwitchNextAmmo and OnAmmo).
+-- ammo_index is 1-based into the wheel ammo table; the native fallback wants the
+-- 0-based ammo type, hence ammo_index - 1.
+local function wheel_swap_to_ammo(wpn, ammo_index)
+	if magazine_binder.is_supported_weapon(wpn) then
+		local ammo_map = utils_item.get_ammo(nil, wpn:id())
+		local magazine = magazines.find_magazine(wpn, ammo_map[ammo_index])
+		if magazines.get_mag_data(wpn:id()) ~= nil then
+			eject(wpn)
+		end
+		local pre_table = magazines.count_ammo(wpn)
+		local first_round = nil
+		if magazines_mcm.get_config("retain_round") and wpn:get_ammo_in_magazine() > 0 then
+			first_round = magazines.get_sec_chambered(wpn)
+		end
+		-- match the native reload handshake so the real mag bone stays hidden for the whole reload
+		scripted_magazines.set_pending_mag_section(scripted_magazines.mag_section_of(magazine))
+		if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
+		wpn:switch_state(7)
+		disable_info("sleep_active")
+		magazines.action_start_reload()
+		create_time_event("mag_redux", "delay_weapon" .. wpn:id(), 0.1, magazines.delay_load_weapon, wpn:id(), magazine, pre_table, first_round)
+	else
+		wpn:unload_magazine(true)
+		wpn:set_ammo_type(ammo_index - 1) -- ammo type starts from 0
+		db.actor:reload_weapon()
+	end
+end
+
+function on_game_start()
+	-- core owns the handshake state; bail if it is not loaded
+	if not (scripted_magazines and scripted_magazines.set_pending_mag_section) then return end
+
+	-- Make Mags Reloaded ignore lmg_reload motion marks (we time the swap ourselves)
+	local original_mags_anim_mark = magazines.actor_on_hud_animation_mark
+	magazines.actor_on_hud_animation_mark = function(state, mark, hud_item, owner)
+		if mark ~= "lmg_reload" then
+			original_mags_anim_mark(state, mark, hud_item, owner)
+		end
+	end
+
+	-- Ammo wheel: trigger the reload that swaps to the new ammo type's mag
+	if mags_patches and mags_patches.UIWheelAmmoWuut then
+		mags_patches.UIWheelAmmoWuut.SwitchNextAmmo = function(self)
+			local wpn = db.actor:active_item()
+			if wpn and (wpn:section() == self.section) then
+				local new_type
+				local ammo_type = wpn:get_ammo_type()
+
+				-- next available ammo type (+2: +1 is the current type in the ammo table)
+				for i = (ammo_type + 2), self.ammo_max do
+					if self.avail[i] then new_type = i break end
+				end
+				-- wrap around to an earlier available type
+				if not new_type then
+					for i = 1, ammo_type do
+						if self.avail[i] then new_type = i break end
+					end
+				end
+
+				if new_type then
+					wheel_swap_to_ammo(wpn, new_type)
+				end
+			end
+			self:Close()
+		end
+
+		mags_patches.UIWheelAmmoWuut.OnAmmo = function(self, n)
+			local wpn = db.actor:active_item()
+			if wpn and (wpn:section() == self.section) and self.avail[n] then
+				local ammo_type = wpn:get_ammo_type()
+				if ammo_type ~= n - 1 then
+					wheel_swap_to_ammo(wpn, n)
+				end
+			end
+			self:Close()
+		end
+	end
+end

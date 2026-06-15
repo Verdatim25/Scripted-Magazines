@@ -13,7 +13,7 @@
 --
 -- Feel free to optimize and PR. Ask Verdatim on the GAMMA discord for help.
 
-if not magazines then return end
+if not (magazines and magazine_binder and magazines_mcm) then return end
 
 -- Re-exports from magazine_binder, kept global for this script and downstream addons
 gc						 	= game.translate_string
@@ -38,9 +38,10 @@ dump_data					= magazine_binder.dump_data
 get_mags_by_ammo_type		= magazine_binder.get_mags_by_ammo_type
 get_config					= magazines_mcm.get_config
 
--- magazines helpers used by the wheel patches in on_game_start
-local eject					= magazines.eject_magazine
-local create_time_event		= magazines.create_time_event
+-- debug logging, suppress unless the game is launched in Debug mode
+local function dbg(...)
+	if DEV_DEBUG then printf(...) end
+end
 
 -- Cross-call signal state
 local override_model_path   -- when set, apply_scripted_magazines uses this path instead of the loaded mag
@@ -55,7 +56,7 @@ time_event_id = 0
 -- A weapon is supported if it declares mag bones to hide
 function is_weapon_supported(sec)
 	if not ini_sys:r_string_ex(sec, "s_magazine_hide_bones") then
-		printf("weapon is not supported")
+		dbg("weapon is not supported")
 		return false
 	end
 	return true
@@ -68,29 +69,19 @@ function add_bullets_to_magazines(obj, magazine)
 	local mag_section = magazine.section
 	local bullets = magazine.loaded
 	-- magazine.loaded gives a table with the later entries being the highest bullet. So lets say for example at the top of a filled 30 round magazine is an AP round, the table[30] will be the ap round section
-	local attachment_tbl = {}
-		
-	local function iterator(name, attachment)
+
+	-- collect the mag attachments once, reuse below
+	local mag_attachments = {}
+	local function collect_mags(name, attachment)
 		if string.find(name, "magazine_") then
-			attachment_tbl[#attachment_tbl + 1] = attachment
+			mag_attachments[#mag_attachments + 1] = attachment
 		end
 	end
-	obj:iterate_attachments(iterator)
-	for _, attachment in pairs(attachment_tbl) do
-		local bullet_tbl = {}
-		local function iterator(name, attachment)
-			if string.find(name, "scripted_bullet_") then
-				bullet_tbl[#bullet_tbl + 1] = attachment
-			end
-		end
-		attachment:iterate_attachments(iterator)
-		for _i,bullet in pairs(bullet_tbl) do
-			attachment:remove_attachment(bullet)
-		end
-		bullet_tbl = nil
-	end
-	attachment_tbl = nil
-	
+	obj:iterate_attachments(collect_mags)
+
+	-- highest bullet index rendered this pass, anything above it is left over from a bigger load
+	local rendered = 0
+
 	for i = #bullets, 1, -1 do
 		local bullet_section = bullets[i]
 		local position_from_top = #bullets - i + 1
@@ -104,64 +95,73 @@ function add_bullets_to_magazines(obj, magazine)
 		for i,v in pairs(positions) do
 			positions[i] = tonumber(v)
 		end
-		
+
 		-- finds rotations
 		local rotations = ini_sys:r_string_ex(mag_section, "s_magazine_bullet_rot_" .. position_from_top) or ini_sys:r_string_ex(mag_section, "s_magazine_bullet_rot_base") or "0,0,0"
 		rotations = str_explode(rotations, ",")
 		for i,v in pairs(rotations) do
 			rotations[i] = tonumber(v)
 		end
-		
+
 		-- finds scale
 		local scale = ini_sys:r_float_ex(mag_section, "s_magazine_bullet_scale_" .. position_from_top) or ini_sys:r_float_ex(mag_section, "s_magazine_bullet_scale_base") or 1
-		
+
 		-- finds parent bone
 		local parent_bone = ini_sys:r_string_ex(mag_section, "s_magazine_bullet_parent_bone_" .. position_from_top) or ini_sys:r_string_ex(mag_section, "s_magazine_bullet_parent_bone_base") or "magazin"
-		
+
 		local model_path = ini_sys:r_string_ex(mag_section, "s_magazine_bullet_" .. bullet_section) or ini_sys:r_string_ex(mag_section, "s_magazine_bullet_base") or "anomaly_weapons\\empty_object"
-		
-		--model_path = [[anomaly_weapons\s_magazines\ak_30_orange]]
+
 		if not (model_path and parent_bone and scale) then goto continue end
-		
-		local attachment_tbl = {}
-		
-		local function iterator(name, attachment)
-			if string.find(name, "magazine_") then
-				attachment_tbl[#attachment_tbl + 1] = attachment
-			end
-		end
-		obj:iterate_attachments(iterator)
-		
-		for i,attachment in pairs(attachment_tbl) do
+
+		for _, attachment in pairs(mag_attachments) do
+			-- reuse the existing bullet attachment for this slot, only create it once
 			local bullet_attachment = attachment:get_attachment("scripted_bullet_" .. position_from_top)
 			if not bullet_attachment then
-				printf("added bullet attachment of name %s, pos is %s rot is %s scale is %s model_path is %s", "bullet_" .. position_from_top, vector():set(positions[1],positions[2],positions[3]), vector():set(rotations[1],rotations[2],rotations[3]), scale, model_path)
 				bullet_attachment = attachment:add_attachment("scripted_bullet_" .. position_from_top, model_path)
-				printf("successfully added bullet attachment")
 			end
 			if bullet_attachment then
 				bullet_attachment:set_type(script_attachment_type.Hud)
 				bullet_attachment:set_model(model_path, false)
-				printf("set model to %s", model_path)
 				bullet_attachment:set_position(positions[1], positions[2], positions[3])
 				bullet_attachment:set_rotation(rotations[1], rotations[2], rotations[3])
 				bullet_attachment:set_scale(scale)
 				bullet_attachment:set_parent_bone(parent_bone)
 			end
 		end
-		
-		attachment_tbl = nil
+
+		rendered = tonumber(position_from_top)
 
 		::continue::
 	end
-	
+
+	-- trim only the bullets above the current count instead of wiping and rebuilding every refresh
+	for _, attachment in pairs(mag_attachments) do
+		local stale = {}
+		local function collect_stale(name, child)
+			local n = string.match(name, "^scripted_bullet_(%d+)$")
+			if n and tonumber(n) > rendered then
+				stale[#stale + 1] = child
+			end
+		end
+		attachment:iterate_attachments(collect_stale)
+		for _, child in pairs(stale) do
+			attachment:remove_attachment(child)
+		end
+	end
 end
 
--- Resolve a magazine's section from a LIVE object (call while it still exists)
-local function mag_section_of(mag)
+-- Resolve a magazine's section from a LIVE object (call while it still exists).
+-- Module-level so the compat scripts (ammo wheel, QAW) can resolve a section too.
+function mag_section_of(mag)
 	if not mag then return nil end
 	local data = get_mag_data(mag:id())
 	return (data and data.section) or mag:section()
+end
+
+-- Public handshake for the compat scripts: stash the section of the mag chosen at the
+-- wheel/QAW before delay_load_weapon runs, so the delay-0 swap bones pick the right model.
+function set_pending_mag_section(sec)
+	pending_swap_mag_section = sec
 end
 
 function change_specific_mag_model(configs)
@@ -195,7 +195,7 @@ function change_specific_mag_model(configs)
 			local scale = ini_sys:r_float_ex(obj_sec, "s_magazine_scale_" .. parent_bone) or 1
 			attachment:set_scale(scale)
 		end
-		printf("obj %s, bone_to_switch %s, model_path %s, name %s parent_bone %s", obj:name(), bone_to_switch, model_path, name, parent_bone)
+		dbg("obj %s, bone_to_switch %s, model_path %s, name %s parent_bone %s", obj:name(), bone_to_switch, model_path, name, parent_bone)
 	end
 	obj:iterate_attachments(iterator)
 	return true
@@ -207,14 +207,14 @@ function update_scripted_magazines(obj, configs)
 	-- nil check
 	configs = configs or {}
 	local obj_section = obj and obj:section()
-	if not obj_section then 
-		printf("no obj_section")
-		return 
+	if not obj_section then
+		dbg("no obj_section")
+		return
 	end
 	local parent_sec = ini_sys:r_string_ex(obj_section, "parent_section") or obj_section
 	-- obvious
 	if not is_weapon_supported(obj_section) then
-		printf("weapon is not supported")
+		dbg("weapon is not supported")
 		return 
 	end
 	
@@ -231,11 +231,13 @@ function update_scripted_magazines(obj, configs)
 		obj:set_bone_visible(name, false, true, true)
 	end
 	
+	local magazine_model_path
+
 	if not override_model_path then
-	
+
 		local magazine = get_mag_loaded(obj:id())
-		
-		if not magazine then 
+
+		if not magazine then
 			--printf("no magazine")
 			local function iterator(name, attachment)
 				if string.find(name, "magazine_") then
@@ -253,35 +255,34 @@ function update_scripted_magazines(obj, configs)
 		
 		-- find the magazine model path
 		magazine_model_path = ini_sys:r_string_ex(mag_section, "s_magazine_model") or "anomaly_weapons\\empty_object"
-		
-		printf("model path is %s", magazine_model_path)
-		
+
+		dbg("model path is %s", magazine_model_path)
+
 	else
 		-- if override_model_path exists we use it instead
 		magazine_model_path = override_model_path
-		printf("changing model path to %s", magazine_model_path)
+		dbg("changing model path to %s", magazine_model_path)
 		override_model_path = nil
 	end
-	
+
 	-- nil check
-	if not magazine_model_path then 
-		printf("no model path")
-		return 
+	if not magazine_model_path then
+		dbg("no model path")
+		return
 	end
-	
-	print_r(mag_bone_names)
-	printf("%s, %s", mag_section, magazine_model_path)
+
+	if DEV_DEBUG then print_r(mag_bone_names) end
 	
 	-- iterates through each mag bone, not really necessary i just thought it would be useful when i first made it
 	configs.skip_bone_name = configs.skip_bone_name or {}
 	for i,name in pairs(mag_bone_names) do
-		if configs.skip_bone_name[name] then return end
-		
+		if configs.skip_bone_name[name] then goto continue end
+
 		local s_magazine
 		-- reuse the attachment for this bone if it exists, else create it
 		local has = obj:get_attachment("magazine_" .. name)
-		if has then 
-			printf("magazine model already attached")
+		if has then
+			dbg("magazine model already attached")
 			s_magazine = has
 		else
 			s_magazine = obj:add_attachment("magazine_" .. name, magazine_model_path)
@@ -316,15 +317,16 @@ function update_scripted_magazines(obj, configs)
 		s_magazine:set_rotation(rotations[1], rotations[2], rotations[3])
 		s_magazine:set_scale(scale, scale, scale)
 		s_magazine:set_parent_bone(parent_bone)
-		
-		printf("%s, %s, %s, %s", vector():set(positions[1], positions[2], positions[3]), vector():set(rotations[1], rotations[2], rotations[3]), scale, parent_bone)
-		
+
+		dbg("%s, %s, %s, %s", vector():set(positions[1], positions[2], positions[3]), vector():set(rotations[1], rotations[2], rotations[3]), scale, parent_bone)
+
+		::continue::
 	end
 	
 	local UpdateFrequency = 1000
 	
-	tg = time_global()
-	
+	local tg = time_global()
+
 	if tg < UpdateTimer then return end
 	
 	UpdateTimer = tg + UpdateFrequency
@@ -338,7 +340,6 @@ end
 function actor_on_hud_animation_play(anim_table, obj)
 	-- empty reloads carry "empty" in the anim name; picks the drum out/in variant
 	reload_is_empty = string.find(anim_table.anm_name, "empty") and true or false
-	printf(ini_sys:r_string_ex(obj:section(), "hud"))
 	if string.find(anim_table.anm_name, "anm_reload") and not (string.find(anim_table.anm_name, "misfire")) then
 		update_scripted_magazines(obj, {hide_override = false})
 
@@ -378,10 +379,12 @@ function actor_on_hud_animation_play(anim_table, obj)
 			-- time from incoming/pending mag section (delay-0 bones use the pending hint)
 
 			-- divide current mag_swap_delay with anim speed so mag_reload_speed is compatible
-			local anim_speed = anim_table.anm_speed or 1
+			-- guard against zero/negative
+			local anim_speed = anim_table.anm_speed
+			if not anim_speed or anim_speed <= 0 then anim_speed = 1 end
 			mag_swap_delay = mag_swap_delay / anim_speed
 
-			printf("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
+			dbg("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
 			CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
 		end
 	else
@@ -401,16 +404,9 @@ function on_game_start()
 		RegisterScriptCallback("actor_on_hud_animation_play", actor_on_hud_animation_play)
 	end
 
-	-- Make Mags Reloaded ignore lmg_reload motion marks (we time the swap ourselves)
-	local original_mags_anim_mark = magazines.actor_on_hud_animation_mark
-	magazines.actor_on_hud_animation_mark = function(state, mark, hud_item, owner)
-		if mark ~= "lmg_reload" then
-			original_mags_anim_mark(state, mark, hud_item, owner)
-		end
-	end
-
 	-- Capture the magazine being loaded. Every load path (reload, ammo wheel, QAW,
-	-- inventory drag-drop) funnels through delay_load_weapon
+	-- inventory drag-drop) funnels through delay_load_weapon. This is the universal
+	-- capture, so it stays in core; the wheel/QAW specifics live in the compat scripts.
 	local original_delay_load_weapon = magazines.delay_load_weapon
 	magazines.delay_load_weapon = function(id, magazine, ...)
 		if magazine then
@@ -421,122 +417,5 @@ function on_game_start()
 			pending_swap_mag_section = nil
 		end
 		return original_delay_load_weapon(id, magazine, ...)
-	end
-
-	-- Ammo wheel (Mags Reloaded): trigger the reload that swaps to the new ammo type's mag
-	if mags_patches and mags_patches.UIWheelAmmoWuut then
-		mags_patches.UIWheelAmmoWuut.SwitchNextAmmo = function(self)
-			local wpn = db.actor:active_item()
-			if wpn and (wpn:section() == self.section) then
-				local new_type
-				local ammo_type = wpn:get_ammo_type()
-
-				-- next available ammo type (+2: +1 is the current type in the ammo table)
-				for i = (ammo_type + 2), self.ammo_max do
-					if self.avail[i] then new_type = i break end
-				end
-				-- wrap around to an earlier available type
-				if not new_type then
-					for i = 1, ammo_type do
-						if self.avail[i] then new_type = i break end
-					end
-				end
-
-				if new_type then
-					if magazines and is_supported_weapon(wpn) then
-						local ammo_map = utils_item.get_ammo(nil, wpn:id())
-						local magazine = magazines.find_magazine(wpn, ammo_map[new_type])
-						if magazines.get_mag_data(wpn:id()) ~= nil then
-							eject(wpn)
-						end
-						local pre_table = magazines.count_ammo(wpn)
-						local first_round = nil
-						if magazines_mcm.get_config("retain_round") and wpn:get_ammo_in_magazine() > 0 then
-							first_round = magazines.get_sec_chambered(wpn)
-						end
-						-- match the native reload handshake so mag_bone_hider keeps the real
-						-- mag bone hidden for the whole reload
-						pending_swap_mag_section = mag_section_of(magazine) -- early hint for delay-0 swap bones (see change_specific_mag_model)
-						if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
-						wpn:switch_state(7)
-						disable_info("sleep_active")
-						magazines.action_start_reload()
-						create_time_event("mag_redux", "delay_weapon" .. wpn:id(), 0.1, magazines.delay_load_weapon, wpn:id(), magazine, pre_table, first_round)
-					else
-						wpn:unload_magazine(true)
-						wpn:set_ammo_type(new_type - 1) -- ammo type starts from 0
-						db.actor:reload_weapon()
-					end
-				end
-			end
-			self:Close()
-		end
-
-		mags_patches.UIWheelAmmoWuut.OnAmmo = function(self, n)
-			local wpn = db.actor:active_item()
-			if wpn and (wpn:section() == self.section) and self.avail[n] then
-				local ammo_type = wpn:get_ammo_type()
-				if ammo_type ~= n - 1 then
-					if magazines and wpn and is_supported_weapon(wpn) then
-						local ammo_map = utils_item.get_ammo(nil, wpn:id())
-						local magazine = magazines.find_magazine(wpn, ammo_map[n])
-						if magazines.get_mag_data(wpn:id()) ~= nil then
-							eject(wpn)
-						end
-						local pre_table = magazines.count_ammo(wpn)
-						local first_round = nil
-						if magazines_mcm.get_config("retain_round") and wpn:get_ammo_in_magazine() > 0 then
-							first_round = magazines.get_sec_chambered(wpn)
-						end
-						-- match the native reload handshake (see SwitchNextAmmo) to avoid the
-						-- double-mag and apply the mag reload speed
-						pending_swap_mag_section = mag_section_of(magazine) -- early hint for delay-0 swap bones (see change_specific_mag_model)
-						if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
-						wpn:switch_state(7)
-						disable_info("sleep_active")
-						magazines.action_start_reload()
-						create_time_event("mag_redux", "delay_weapon" .. wpn:id(), 0.1, magazines.delay_load_weapon, wpn:id(), magazine, pre_table, first_round)
-					else
-						wpn:unload_magazine(true)
-						wpn:set_ammo_type(n - 1) -- ammo type starts from 0
-						db.actor:reload_weapon()
-					end
-				end
-			end
-			self:Close()
-		end
-	end
-
-	-- Quick action wheel (Haru): reload the chosen magazine into the active weapon
-	if haru_quick_action_wheel_mcm and haru_quick_action_wheel_mcm.QMagazineWheelOption then
-		haru_quick_action_wheel_mcm.QMagazineWheelOption.LoadInActiveWeapon = function(self, obj)
-			local wpn = db.actor:active_item()
-			local pre_table = magazines.count_ammo(wpn)
-
-			local first_round = nil
-			if magazines_mcm.get_config("retain_round") and wpn:get_ammo_in_magazine() > 0 then
-				first_round = magazines.get_sec_chambered(wpn)
-			end
-
-			-- match the native reload handshake before switch_state(7) so mag_bone_hider
-			-- keeps the real mag bone hidden for the whole reload
-			pending_swap_mag_section = mag_section_of(obj) -- early hint for delay-0 swap bones (see change_specific_mag_model)
-			if mag_reload_speed then mag_reload_speed.set_pending_mag(obj) end
-
-			wpn:switch_state(7)
-
-			magazines.action_start_reload()
-
-			magazines.create_time_event(
-				"Mag_redux",
-				"delay_weapon" .. wpn:id(),
-				0.1,
-				magazines.delay_load_weapon,
-				haru_quick_action_wheel_mcm.MCM_SETTINGS.old_mags_compat and wpn or wpn:id(),
-				obj,
-				pre_table,
-				first_round
-			)
-		end
 	end
 end
