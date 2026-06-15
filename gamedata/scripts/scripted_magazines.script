@@ -44,7 +44,10 @@ local create_time_event		= magazines.create_time_event
 
 -- Cross-call signal state
 local override_model_path   -- when set, apply_scripted_magazines uses this path instead of the loaded mag
-local incoming_magazine     -- the mag being loaded this reload, captured from delay_load_weapon
+
+local incoming_mag_section     -- section of the mag being loaded this reload, from delay_load_weapon
+local pending_swap_mag_section -- section of the chosen new mag, known synchronously at the wheel/QAW
+                               -- handshake (before delay_load_weapon runs)
 local reload_is_empty       -- true when the current reload is an empty reload (drum anim branch)
 
 time_event_id = 0
@@ -154,18 +157,32 @@ function add_bullets_to_magazines(obj, magazine)
 	
 end
 
+-- Resolve a magazine's section from a LIVE object (call while it still exists)
+local function mag_section_of(mag)
+	if not mag then return nil end
+	local data = get_mag_data(mag:id())
+	return (data and data.section) or mag:section()
+end
+
 function change_specific_mag_model(configs)
 	if not configs then return true end
 	local obj = configs.obj_id and get_object_by_id(configs.obj_id)
 	if not obj then return true end
+
+	-- busy hands guard
+	local active = db.actor and db.actor:active_item()
+	if not (active and active:id() == obj:id()) then return true end
+
 	local bone_to_switch = configs.bone_to_switch
 
 	-- resolve the model
 	local model_path = configs.model_path
 	if not model_path then
-		local new_magazine = incoming_magazine or magazines.find_magazine(obj)
-		local mag_data = get_mag_data(new_magazine and new_magazine:id())
-		model_path = ini_sys:r_string_ex((mag_data and mag_data.section) or "", "s_magazine_model") or "anomaly_weapons\\empty_object"
+		-- Priority: incoming_mag_section (authoritative, from delay_load_weapon) -> pending_swap_mag_section
+		-- (chosen up-front at the wheel/QAW handshake, available at t=0) -> find_magazine (native reload
+		-- fallback)
+		local mag_section = incoming_mag_section or pending_swap_mag_section or mag_section_of(magazines.find_magazine(obj))
+		model_path = (mag_section and ini_sys:r_string_ex(mag_section, "s_magazine_model")) or "anomaly_weapons\\empty_object"
 	end
 
 	local function iterator(name, attachment)
@@ -199,7 +216,12 @@ function update_scripted_magazines(obj, configs)
 	
 	-- mag bone names come from the weapon section field "s_magazine_hide_bones"
 	local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
-	
+	-- @TODO: Check if this true and get rid of this if not.
+	-- we need to trim bone names in case dltx contains spaces in its entries (probably)
+	for i, name in pairs(mag_bone_names) do
+		mag_bone_names[i] = name:gsub("%s", "")
+	end
+
 	-- hide the real mag bones so only our attachment shows
 	for index, name in pairs(mag_bone_names) do
 		obj:set_bone_visible(name, false, true, true)
@@ -316,8 +338,8 @@ function actor_on_hud_animation_play(anim_table, obj)
 	if string.find(anim_table.anm_name, "anm_reload") and not (string.find(anim_table.anm_name, "misfire")) then
 		update_scripted_magazines(obj, {hide_override = false})
 
-		-- scope incoming_magazine to this reload
-		incoming_magazine = nil
+		-- scope incoming mag to this reload
+		incoming_mag_section = nil
 
 		-- drum mag: play the matching left-hand anim when the attached model is the drum
 		local function iterator(name, attachment)
@@ -337,14 +359,19 @@ function actor_on_hud_animation_play(anim_table, obj)
 		
 		local obj_section = obj:section()
 		local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
+		-- @TODO: Check if this true and get rid of this if not.
+		-- trim leading/trailing space from each token
+		for i, name in pairs(mag_bone_names) do
+			mag_bone_names[i] = name:gsub("%s", "")
+		end
 		for i,name in pairs(mag_bone_names) do
 			local mag_swap_delay = ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay" ) or ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay_" .. name) or 1.3
 			time_event_id = time_event_id + 1
 			local configs = {}
 			configs.obj_id = obj:id()
 			configs.bone_to_switch = name
-			-- model_path is left unset on purpose: change_specific_mag_model resolves it
-			-- at swap time from incoming_magazine, once delay_load_weapon has captured it
+			-- model_path is left unset on purpose: change_specific_mag_model resolves it at swap
+			-- time from incoming/pending mag section (delay-0 bones use the pending hint)
 			printf("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
 			CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
 		end
@@ -377,7 +404,13 @@ function on_game_start()
 	-- inventory drag-drop) funnels through delay_load_weapon
 	local original_delay_load_weapon = magazines.delay_load_weapon
 	magazines.delay_load_weapon = function(id, magazine, ...)
-		if magazine then incoming_magazine = magazine end
+		if magazine then
+			-- magazine is alive here; capture its section before it's consumed by the load
+			incoming_mag_section = mag_section_of(magazine)
+
+			-- incoming is now authoritative; drop the early hint so it can't leak into a later reload
+			pending_swap_mag_section = nil
+		end
 		return original_delay_load_weapon(id, magazine, ...)
 	end
 
@@ -414,6 +447,7 @@ function on_game_start()
 						end
 						-- match the native reload handshake so mag_bone_hider keeps the real
 						-- mag bone hidden for the whole reload
+						pending_swap_mag_section = mag_section_of(magazine) -- early hint for delay-0 swap bones (see change_specific_mag_model)
 						if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
 						wpn:switch_state(7)
 						disable_info("sleep_active")
@@ -447,6 +481,7 @@ function on_game_start()
 						end
 						-- match the native reload handshake (see SwitchNextAmmo) to avoid the
 						-- double-mag and apply the mag reload speed
+						pending_swap_mag_section = mag_section_of(magazine) -- early hint for delay-0 swap bones (see change_specific_mag_model)
 						if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
 						wpn:switch_state(7)
 						disable_info("sleep_active")
@@ -476,6 +511,7 @@ function on_game_start()
 
 			-- match the native reload handshake before switch_state(7) so mag_bone_hider
 			-- keeps the real mag bone hidden for the whole reload
+			pending_swap_mag_section = mag_section_of(obj) -- early hint for delay-0 swap bones (see change_specific_mag_model)
 			if mag_reload_speed then mag_reload_speed.set_pending_mag(obj) end
 
 			wpn:switch_state(7)
