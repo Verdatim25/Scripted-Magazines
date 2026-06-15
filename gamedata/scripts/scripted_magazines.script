@@ -220,11 +220,6 @@ function update_scripted_magazines(obj, configs)
 	
 	-- mag bone names come from the weapon section field "s_magazine_hide_bones"
 	local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
-	-- @TODO: Check if this true and get rid of this if not.
-	-- we need to trim bone names in case dltx contains spaces in its entries (probably)
-	for i, name in pairs(mag_bone_names) do
-		mag_bone_names[i] = name:gsub("%s", "")
-	end
 
 	-- hide the real mag bones so only our attachment shows
 	for index, name in pairs(mag_bone_names) do
@@ -364,11 +359,6 @@ function actor_on_hud_animation_play(anim_table, obj)
 		
 		local obj_section = obj:section()
 		local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
-		-- @TODO: Check if this true and get rid of this if not.
-		-- trim leading/trailing space from each token
-		for i, name in pairs(mag_bone_names) do
-			mag_bone_names[i] = name:gsub("%s", "")
-		end
 		for i,name in pairs(mag_bone_names) do
 			local mag_swap_delay = ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay" ) or ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay_" .. name) or 1.3
 			time_event_id = time_event_id + 1
