@@ -1,0 +1,40 @@
+-- Haru Quick Action Wheel integration for Scripted Magazines
+
+if not (magazines and magazines_mcm) then return end
+
+function on_game_start()
+	-- core owns the handshake state; bail if it is not loaded
+	if not (scripted_magazines and scripted_magazines.set_pending_mag_section) then return end
+	if not (haru_quick_action_wheel_mcm and haru_quick_action_wheel_mcm.QMagazineWheelOption) then return end
+
+	-- Reload the chosen magazine into the active weapon
+	haru_quick_action_wheel_mcm.QMagazineWheelOption.LoadInActiveWeapon = function(self, obj)
+		local wpn = db.actor:active_item()
+		local pre_table = magazines.count_ammo(wpn)
+
+		local first_round = nil
+		if magazines_mcm.get_config("retain_round") and wpn:get_ammo_in_magazine() > 0 then
+			first_round = magazines.get_sec_chambered(wpn)
+		end
+
+		-- match the native reload handshake before switch_state(7) so the real mag bone
+		-- stays hidden for the whole reload
+		scripted_magazines.set_pending_mag_section(scripted_magazines.mag_section_of(obj))
+		if mag_reload_speed then mag_reload_speed.set_pending_mag(obj) end
+
+		wpn:switch_state(7)
+
+		magazines.action_start_reload()
+
+		magazines.create_time_event(
+			"Mag_redux",
+			"delay_weapon" .. wpn:id(),
+			0.1,
+			magazines.delay_load_weapon,
+			haru_quick_action_wheel_mcm.MCM_SETTINGS.old_mags_compat and wpn or wpn:id(),
+			obj,
+			pre_table,
+			first_round
+		)
+	end
+end
