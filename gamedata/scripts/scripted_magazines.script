@@ -184,12 +184,16 @@ function change_specific_mag_model(configs)
 		local mag_section = incoming_mag_section or pending_swap_mag_section or mag_section_of(magazines.find_magazine(obj))
 		model_path = (mag_section and ini_sys:r_string_ex(mag_section, "s_magazine_model")) or "anomaly_weapons\\empty_object"
 	end
+		
+	local obj_sec = obj:section()
 
 	local function iterator(name, attachment)
 		-- this function returns an id
 		local parent_bone = string.sub(name, 10)
 		if parent_bone == bone_to_switch then
 			attachment:set_model(model_path, false)
+			local scale = ini_sys:r_float_ex(obj_sec, "s_magazine_scale_" .. parent_bone) or 1
+			attachment:set_scale(scale)
 		end
 		printf("obj %s, bone_to_switch %s, model_path %s, name %s parent_bone %s", obj:name(), bone_to_switch, model_path, name, parent_bone)
 	end
@@ -235,8 +239,8 @@ function update_scripted_magazines(obj, configs)
 			--printf("no magazine")
 			local function iterator(name, attachment)
 				if string.find(name, "magazine_") then
-					-- no mag loaded: push any existing attachment off-screen, but not mid-reload
-					attachment:set_position(-100, 0, 0)
+					-- no mag loaded: scale the existing magazine to 0, but not mid-reload
+					attachment:set_scale(0)
 				end
 			end
 			if configs.hide_override then
@@ -372,6 +376,11 @@ function actor_on_hud_animation_play(anim_table, obj)
 			configs.bone_to_switch = name
 			-- model_path is left unset on purpose: change_specific_mag_model resolves it at swap
 			-- time from incoming/pending mag section (delay-0 bones use the pending hint)
+
+			-- divide current mag_swap_delay with anim speed so mag_reload_speed is compatible
+			local anim_speed = anim_table.anm_speed or 1
+			mag_swap_delay = mag_swap_delay / anim_speed
+
 			printf("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
 			CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
 		end
