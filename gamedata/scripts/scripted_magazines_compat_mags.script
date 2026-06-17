@@ -22,6 +22,10 @@ local function wheel_swap_to_ammo(wpn, ammo_index)
 		end
 		-- match the native reload handshake so the real mag bone stays hidden for the whole reload
 		scripted_magazines.set_pending_mag_section(scripted_magazines.mag_section_of(magazine))
+		-- cache pending magazine's ammo table
+		local mag_data = magazine_binder.get_data(magazine and magazine:id()) or {}
+		scripted_magazines.set_pending_mag_ammo(mag_data.loaded)
+		--printf("set_pending_mag_ammo called from wheel_swap_to_ammo")
 		if mag_reload_speed then mag_reload_speed.set_pending_mag(magazine) end
 		wpn:switch_state(7)
 		disable_info("sleep_active")
