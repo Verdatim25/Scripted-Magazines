@@ -49,6 +49,7 @@ local override_model_path   -- when set, apply_scripted_magazines uses this path
 local incoming_mag_section     -- section of the mag being loaded this reload, from delay_load_weapon
 local pending_swap_mag_section -- section of the chosen new mag, known synchronously at the wheel/QAW
                                -- handshake (before delay_load_weapon runs)
+local pending_swap_mag_ammo		-- ammo table of the incomng magazine, used to show the second magazine with the correct ammo
 local reload_is_empty       -- true when the current reload is an empty reload (drum anim branch)
 
 time_event_id = 0
@@ -64,10 +65,12 @@ end
 
 -- Find a magazine model (from the loaded mag or override_model_path) and attach it to the weapon
 
-function add_bullets_to_magazines(obj, magazine)
-	if not obj or not magazine then return false end
-	local mag_section = magazine.section
-	local bullets = magazine.loaded
+function add_bullets_to_magazines(obj, configs)
+	if not obj or not configs then return false end
+	--dbg("add_bullets_to_magazines is called")
+	local mag_section = configs.section
+	local bullets = configs.loaded
+	if DEV_DEBUG then print_r(bullets) end
 	-- magazine.loaded gives a table with the later entries being the highest bullet. So lets say for example at the top of a filled 30 round magazine is an AP round, the table[30] will be the ap round section
 
 	-- collect the mag attachments once, reuse below
@@ -164,6 +167,10 @@ function set_pending_mag_section(sec)
 	pending_swap_mag_section = sec
 end
 
+function set_pending_mag_ammo(ammo_table)
+	pending_swap_mag_ammo = ammo_table
+end
+
 function change_specific_mag_model(configs)
 	if not configs then return true end
 	local obj = configs.obj_id and get_object_by_id(configs.obj_id)
@@ -192,6 +199,14 @@ function change_specific_mag_model(configs)
 		local parent_bone = string.sub(name, 10)
 		if parent_bone == bone_to_switch then
 			attachment:set_model(model_path, false)
+
+			-- bullet swapping behaviour
+			local configs2 = {}
+			configs2.section = incoming_mag_section or pending_swap_mag_section or mag_section_of(magazines.find_magazine(obj))
+			configs2.loaded = incoming_mag_ammo or pending_swap_mag_ammo or (get_mag_data(obj) and get_mag_data(obj).loaded) or {}
+			add_bullets_to_magazines(obj, configs2)
+			-- bullet swapping behaviour
+
 			local scale = ini_sys:r_float_ex(obj_sec, "s_magazine_scale_" .. parent_bone) or 1
 			attachment:set_scale(scale)
 		end
@@ -328,7 +343,10 @@ function update_scripted_magazines(obj, configs)
 	
 	local magazine = get_mag_loaded(obj:id())
 	if magazine then
-		add_bullets_to_magazines(obj, magazine)
+		local configs = {}
+		configs.section = magazine.section
+		configs.loaded = magazine.loaded
+		add_bullets_to_magazines(obj, configs)
 	end
 end
 
@@ -403,8 +421,16 @@ function on_game_start()
 			-- magazine is alive here; capture its section before it's consumed by the load
 			incoming_mag_section = mag_section_of(magazine)
 
+			-- capture mag ammo
+			local mag_data = get_mag_data(magazine:id()) or {}
+			--dbg("set_pending_mag_ammo called from delay_load_weapon")
+			incoming_mag_ammo = mag_data.loaded or {}
+			--print_r(incoming_mag_ammo)
+
 			-- incoming is now authoritative; drop the early hint so it can't leak into a later reload
 			pending_swap_mag_section = nil
+			
+			pending_swap_mag_ammo = nil
 		end
 		return original_delay_load_weapon(id, magazine, ...)
 	end
