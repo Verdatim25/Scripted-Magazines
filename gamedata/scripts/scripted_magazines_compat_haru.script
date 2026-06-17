@@ -20,6 +20,10 @@ function on_game_start()
 		-- match the native reload handshake before switch_state(7) so the real mag bone
 		-- stays hidden for the whole reload
 		scripted_magazines.set_pending_mag_section(scripted_magazines.mag_section_of(obj))
+		-- cache pending magazine's ammo table
+		local mag_data = magazine_binder.get_data(obj and obj:id()) or {}
+		scripted_magazines.set_pending_ammo(mag_data.loaded)
+		--printf("set_pending_mag_ammo called from LoadInActiveWeapon")
 		if mag_reload_speed then mag_reload_speed.set_pending_mag(obj) end
 
 		wpn:switch_state(7)
