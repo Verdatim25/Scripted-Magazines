@@ -11,14 +11,14 @@ s_magazine_hide_bones = magazin, magazin_empty
 ; DONT FORGET THIS WHEN ADDING STUFF!! 
 ;=============================================================================
 
-s_magazine_positions_magazin = 0.001,0,0
-s_magazine_rotations_magazin = 0,0,0
-s_magazine_scale_magazin = 1
+s_magazine_positions_magazin         = 0.000031,0.010313,-0.000187
+s_magazine_rotations_magazin         = 0.000000,-0.062500,0.000000
+s_magazine_scale_magazin             = 0.810234
 s_magazine_parent_bone_magazin = magazin
 
-s_magazine_positions_magazin_empty = 0.001,0,0
-s_magazine_rotations_magazin_empty = 0,0,0
-s_magazine_scale_magazin_empty = 1
+s_magazine_positions_magazin_empty   = 0.000031,0.010313,-0.000187
+s_magazine_rotations_magazin_empty   = 0.000000,-0.062500,0.000000
+s_magazine_scale_magazin_empty	     = 0.810234
 s_magazine_parent_bone_magazin_empty = magazin_empty
 
 anm_reload_mag_swap_delay = 1.333
@@ -28,11 +28,11 @@ anm_reload_empty_mag_swap_delay = 1.333
 @[bas_eft_ins_ak_anims]
 
 s_magazine_hide_bones = magazin
-
-s_magazine_positions_magazin = 0,0.0085,0
-s_magazine_rotations_magazin = 0,0,0
-s_magazine_scale_magazin = 1
 s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin   = -0.001875,0.019281,-0.001719
+s_magazine_rotations_magazin   = 0.000000,0.000000,0.000000
+s_magazine_scale_magazin       = 0.876250
 
 anm_reload_mag_swap_delay = 0.8444
 anm_reload_empty_mag_swap_delay = 0.8444
@@ -41,17 +41,17 @@ anm_reload_empty_mag_swap_delay = 0.8444
 @[ak12_sed_reanim]
 s_magazine_hide_bones = magazin, magazin1
 
-s_magazine_positions_magazin = 0.0009,0.0085,0
-s_magazine_rotations_magazin = 0,0,0
-s_magazine_scale_magazin = 0.97
+s_magazine_positions_magazin    = 0.000900,0.013188,-0.009063
+s_magazine_rotations_magazin    = 0.000000,-1.500000,0.000000
+s_magazine_scale_magazin        = 0.855625
 s_magazine_parent_bone_magazin = magazin
 
 anm_reload_mag_swap_delay_magazin = 2.25
 anm_reload_empty_mag_swap_delay_magazin = 2
 
-s_magazine_positions_magazin1 = 0.0009,0.0085,0
-s_magazine_rotations_magazin1 = 0,0,0
-s_magazine_scale_magazin1 = 0.97
+s_magazine_positions_magazin1   = 0.000900,0.013188,-0.009063
+s_magazine_rotations_magazin1   = 0.000000,-1.500000,0.000000
+s_magazine_scale_magazin1       = 0.855625
 s_magazine_parent_bone_magazin1 = magazin1
 
 anm_reload_mag_swap_delay_magazin1 = 0
@@ -59,14 +59,37 @@ anm_reload_empty_mag_swap_delay_magazin1 = 0
 
 ;=============================================================================
 @[aks74u_tac_anim_params]
-
 s_magazine_hide_bones = magazin
-
-s_magazine_positions_magazin = 0.001,-0.003,0.0045
-s_magazine_rotations_magazin = 0,0,0
-s_magazine_scale_magazin = 1
 s_magazine_parent_bone_magazin = magazin
+
+s_magazine_positions_magazin   = 0.002109,0.019578,-0.007375
+s_magazine_rotations_magazin   = 0.000000,-0.062500,0.000000
+s_magazine_scale_magazin       = 0.851250
 
 anm_reload_mag_swap_delay = 1.25
 anm_reload_empty_mag_swap_delay = 1.45
 
+;=============================================================================
+@[nikolas_ak_reanims_762]
+s_magazine_hide_bones 				= magazin, magazin_empty
+s_magazine_parent_bone_magazin 		= magazin
+s_magazine_parent_bone_magazin_empty = magazin_empty
+
+s_magazine_positions_magazin 		= -0.000172,0.007812,-0.001250
+s_magazine_rotations_magazin 		= 0.000000,1.093750,0.000000
+s_magazine_scale_magazin 			= 0.951719
+
+anm_reload_mag_swap_delay = 1.333
+anm_reload_empty_mag_swap_delay = 1.333
+
+;=============================================================================
+@[sedz_ar15]
+s_magazine_hide_bones = wpn_magazine
+s_magazine_parent_bone_wpn_magazine = wpn_magazine
+
+s_magazine_positions_wpn_magazine   = 0.000000,0.019375,-0.003438
+s_magazine_rotations_wpn_magazine   = 0.000000,0.000000,0.000000
+s_magazine_scale_wpn_magazine       = 1.000000
+
+anm_reload_mag_swap_delay = 1
+anm_reload_empty_mag_swap_delay = 1.3
