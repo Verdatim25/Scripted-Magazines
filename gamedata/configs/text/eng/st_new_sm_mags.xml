@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="windows-1251"?>
+
+<string_table>
+	<string id="st_mag_ak12">
+		<text>Standard 5.45x39 AK-12 Magazine</text>
+	</string>
+	<string id="st_mag_ak12_descr">
+		<text>
+		30-round Polymer magazine. Standard issue with the AK-12.
+		</text>
+	</string>
+	
+	<string id="st_mag_ak_5.45x39_short">
+		<text>Short 5.45x39 AK-74 Magazine</text>
+	</string>
+	<string id="st_mag_ak_5.45x39_short_descr">
+		<text>
+		20-round aftermarket polymer magazine. It's shorter length makes reloading easier than with standard sized mags. Easily fits into small pouches.
+		</text>
+	</string>
+	
+	<string id="st_mag_rpk_5.45x39_modern">
+		<text>Extended 5.45x39 AK-74 Magazine</text>
+	</string>
+	<string id="st_mag_rpk_5.45x39_modern_descr">
+		<text>
+		45-round extended polymer magazine. Designation "6L26".
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_bake">
+		<text>Standard 7.62x39 AK-47 Magazine</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_bake_descr">
+		<text>
+		30-round bakelite 7.62x39 magazine. Magazines like these are quite old but still function relatively well. 
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_bake_40">
+		<text>Standard 7.62x39 Bakelite RPK Magazine</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_bake_40_descr">
+		<text>
+		Bakelite 40-round RPK Magazine. This is also compatible with the AKM and other 7.62x39 AK rifles.
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_pmag">
+		<text>AK 7.62x39 PMAG Magazine</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_pmag_descr">
+		<text>
+		30-round polymer 7.62x39 magazine.
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_pmag_20">
+		<text>Short AK 7.62x39 PMAG Magazine</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_pmag_20_descr">
+		<text>
+		20-round polymer 7.62x39 magazine. fits in smaller magazine puches with ease.
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_ak30_blk">
+		<text>AK 7.62x39 AK30 Magazine (Black)</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_ak30_blk_descr">
+		<text>
+		30-round polymer 7.62x39 magazine molded in black colored plastic.
+		</text>
+	</string>
+	
+	<string id="st_mag_ak_7.62x39_ak30_fde">
+		<text>AK 7.62x39 AK30 Magazine (FDE)</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_ak30_fde_descr">
+		<text>
+		30-round polymer 7.62x39 magazine molded in flat dark earth colored plastic.
+		</text>
+	</string>
+	
+	<string id="st_mag_ak_7.62x39_drum_50">
+		<text>Standard 7.62x39 AK-47 Magazine</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_drum_50_descr">
+		<text>
+		30-round bakelite 7.62x39 magazine. Magazines like these are quite old but still function relatively well. 
+		</text>
+	</string>
+
+	<string id="st_mag_ak_7.62x39_drum_73">
+		<text>7.62x39 PROMAG 73-round Drum</text>
+	</string>
+	<string id="st_mag_ak_7.62x39_drum_73_descr">
+		<text>
+		73-round polymer 7.62x39 drum magazine. This magazine has a higher chance of jamming due to the nature of drum magazines.
+		</text>
+	</string>
+
+	<string id="st_mag_sks_drum_7.62x39">
+		<text>SKS 7.62x39 75-round Drum</text>
+	</string>
+	<string id="st_mag_sks_drum_7.62x39_descr">
+		<text>
+		75-round steel 7.62x39 magazine. This magazine has a higher chance of jamming due to the nature of drum magazines.
+		</text>
+	</string>
+
+	<string id="st_mag_cwp">
+		<text>AK 5.56x45 Waffle Magazine</text>
+	</string>
+	<string id="st_mag_cwp_descr">
+		<text>
+		A 30-round 5.56x45 "Waffle Pattern" magazine for the SLR-106 civilian AK-based rifles.
+		</text>
+	</string>
+
+	<string id="st_mag_ak_5.56x45_ext45">
+		<text>AK 5.56x45 Extended Magazine</text>
+	</string>
+	<string id="st_mag_ak_5.56x45_ext45_descr">
+		<text>
+		A 45-round 5.56x45 extended magazine for the AK-101.
+		</text>
+	</string>	
+	
+</string_table>
+		
