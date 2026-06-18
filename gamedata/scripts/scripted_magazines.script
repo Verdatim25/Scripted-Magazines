@@ -90,11 +90,10 @@ function add_bullets_to_magazines(obj, configs)
 		local bullet_section = bullets[i]
 		local position_from_top = #bullets - i + 1
 		position_from_top = tostring(position_from_top)
-		if not ini_sys:r_string_ex(mag_section, "s_magazine_bullet_pos_" .. position_from_top) then
+		local positions = ini_sys:r_string_ex(mag_section, "s_magazine_bullet_pos_" .. position_from_top)
+		if not positions then
 			break
 		end
-		-- finds positions
-		local positions = ini_sys:r_string_ex(mag_section, "s_magazine_bullet_pos_" .. position_from_top) or ini_sys:r_string_ex(mag_section, "s_magazine_bullet_pos_base") or "0,0,0"
 		positions = str_explode(positions, ",")
 		for i,v in pairs(positions) do
 			positions[i] = tonumber(v)
@@ -299,7 +298,10 @@ function update_scripted_magazines(obj, configs)
 		else
 			s_magazine = obj:add_attachment("magazine_" .. name, magazine_model_path)
 		end
-		
+
+		-- add_attachment can fail
+		if not s_magazine then goto continue end
+
 		s_magazine:set_model(magazine_model_path, false)
 		
 		-- finds positions
@@ -353,6 +355,7 @@ function update_scripted_magazines(obj, configs)
 end
 
 function actor_on_hud_animation_play(anim_table, obj)
+	if not (obj and anim_table and anim_table.anm_name) then return end
 	-- empty reloads carry "empty" in the anim name; picks the drum out/in variant
 	reload_is_empty = string.find(anim_table.anm_name, "empty") and true or false
 	if string.find(anim_table.anm_name, "anm_reload") and not (string.find(anim_table.anm_name, "misfire")) then
@@ -362,26 +365,37 @@ function actor_on_hud_animation_play(anim_table, obj)
 		incoming_mag_section = nil
 		incoming_mag_ammo = nil
 
-		-- drum mag: play the matching left-hand anim when the attached model is the drum
-		local function iterator(name, attachment)
-			if string.find(name, "magazine_") and attachment:get_model() == "anomaly_weapons\\s_magazines\\rpk74_drum" then
-				local active = db.actor:active_item()
-				if active then
-					local parent_sec = ini_sys:r_string_ex(active:section(), "parent_section") or active:section()
-					if parent_sec == "wpn_ak74_pmc" then
-						local anm = reload_is_empty and "anm_reload_drum_empty_out" or "anm_reload_drum_out"
-						local speed = tonumber(str_explode((ini_sys:r_string_ex("scripted_magazines_hand_reload_animations_hud", anm) or ""), ",")[3]) or 1
-						game.play_hud_motion(1, "scripted_magazines_hand_reload_animations_hud", anm, false, speed)
+		-- hand-reload mag: a weapon can declare a mag model that needs a custom left-hand
+		-- out anim (e.g. a drum swap).
+		-- Sooo when that model is the one attached - play it.
+		local active = db.actor:active_item()
+		if active then
+			local active_sec = active:section()
+			local parent_sec = ini_sys:r_string_ex(active_sec, "parent_section") or active_sec
+			local hand_model = ini_sys:r_string_ex(active_sec, "s_magazine_hand_reload_model")
+			              or ini_sys:r_string_ex(parent_sec, "s_magazine_hand_reload_model")
+			if hand_model then
+				local hand_hud = ini_sys:r_string_ex(active_sec, "s_magazine_hand_reload_hud")
+				             or ini_sys:r_string_ex(parent_sec, "s_magazine_hand_reload_hud")
+				             or "scripted_magazines_hand_reload_animations_hud"
+				local anim_base = ini_sys:r_string_ex(active_sec, "s_magazine_hand_reload_anim")
+				              or ini_sys:r_string_ex(parent_sec, "s_magazine_hand_reload_anim")
+				              or "anm_reload_drum"
+				local anm = reload_is_empty and (anim_base .. "_empty_out") or (anim_base .. "_out")
+				local speed = tonumber(str_explode((ini_sys:r_string_ex(hand_hud, anm) or ""), ",")[3]) or 1
+				local function iterator(name, attachment)
+					if string.find(name, "magazine_") and attachment:get_model() == hand_model then
+						game.play_hud_motion(1, hand_hud, anm, false, speed)
 					end
 				end
+				obj:iterate_attachments(iterator)
 			end
 		end
-		obj:iterate_attachments(iterator)
 		
 		local obj_section = obj:section()
 		local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
 		for i,name in pairs(mag_bone_names) do
-			local mag_swap_delay = ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay" ) or ini_sys:r_float_ex(obj:section(), (anim_table.anm_name) .. "_mag_swap_delay_" .. name) or 1.3
+			local mag_swap_delay = ini_sys:r_float_ex(obj_section, (anim_table.anm_name) .. "_mag_swap_delay" ) or ini_sys:r_float_ex(obj_section, (anim_table.anm_name) .. "_mag_swap_delay_" .. name) or 1.3
 			time_event_id = time_event_id + 1
 			local configs = {}
 			configs.obj_id = obj:id()

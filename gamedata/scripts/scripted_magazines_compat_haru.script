@@ -10,6 +10,7 @@ function on_game_start()
 	-- Reload the chosen magazine into the active weapon
 	haru_quick_action_wheel_mcm.QMagazineWheelOption.LoadInActiveWeapon = function(self, obj)
 		local wpn = db.actor:active_item()
+		if not wpn then return end
 		local pre_table = magazines.count_ammo(wpn)
 
 		local first_round = nil
