@@ -47,6 +47,7 @@ end
 local override_model_path   -- when set, apply_scripted_magazines uses this path instead of the loaded mag
 
 local incoming_mag_section     -- section of the mag being loaded this reload, from delay_load_weapon
+local incoming_mag_ammo        -- ammo table of the mag being loaded this reload, from delay_load_weapon
 local pending_swap_mag_section -- section of the chosen new mag, known synchronously at the wheel/QAW
                                -- handshake (before delay_load_weapon runs)
 local pending_swap_mag_ammo		-- ammo table of the incomng magazine, used to show the second magazine with the correct ammo
@@ -203,7 +204,8 @@ function change_specific_mag_model(configs)
 			-- bullet swapping behaviour
 			local configs2 = {}
 			configs2.section = incoming_mag_section or pending_swap_mag_section or mag_section_of(magazines.find_magazine(obj))
-			configs2.loaded = incoming_mag_ammo or pending_swap_mag_ammo or (get_mag_data(obj) and get_mag_data(obj).loaded) or {}
+			local obj_mag_data = get_mag_data(obj:id())
+			configs2.loaded = incoming_mag_ammo or pending_swap_mag_ammo or (obj_mag_data and obj_mag_data.loaded) or {}
 			add_bullets_to_magazines(obj, configs2)
 			-- bullet swapping behaviour
 
@@ -358,6 +360,7 @@ function actor_on_hud_animation_play(anim_table, obj)
 
 		-- scope incoming mag to this reload
 		incoming_mag_section = nil
+		incoming_mag_ammo = nil
 
 		-- drum mag: play the matching left-hand anim when the attached model is the drum
 		local function iterator(name, attachment)

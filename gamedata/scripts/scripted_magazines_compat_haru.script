@@ -4,7 +4,7 @@ if not (magazines and magazines_mcm) then return end
 
 function on_game_start()
 	-- core owns the handshake state; bail if it is not loaded
-	if not (scripted_magazines and scripted_magazines.set_pending_mag_section) then return end
+	if not (scripted_magazines and scripted_magazines.set_pending_mag_section and scripted_magazines.set_pending_mag_ammo) then return end
 	if not (haru_quick_action_wheel_mcm and haru_quick_action_wheel_mcm.QMagazineWheelOption) then return end
 
 	-- Reload the chosen magazine into the active weapon
@@ -35,7 +35,7 @@ function on_game_start()
 			"delay_weapon" .. wpn:id(),
 			0.1,
 			magazines.delay_load_weapon,
-			haru_quick_action_wheel_mcm.MCM_SETTINGS.old_mags_compat and wpn or wpn:id(),
+			(haru_quick_action_wheel_mcm.MCM_SETTINGS and haru_quick_action_wheel_mcm.MCM_SETTINGS.old_mags_compat) and wpn or wpn:id(),
 			obj,
 			pre_table,
 			first_round
