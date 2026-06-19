@@ -392,30 +392,47 @@ function actor_on_hud_animation_play(anim_table, obj)
 			end
 		end
 		
-		local obj_section = obj:section()
-		local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
-		for i,name in pairs(mag_bone_names) do
-			local mag_swap_delay = ini_sys:r_float_ex(obj_section, (anim_table.anm_name) .. "_mag_swap_delay" ) or ini_sys:r_float_ex(obj_section, (anim_table.anm_name) .. "_mag_swap_delay_" .. name) or 1.3
-			time_event_id = time_event_id + 1
-			local configs = {}
-			configs.obj_id = obj:id()
-			configs.bone_to_switch = name
-			-- model_path is left unset on purpose: change_specific_mag_model resolves it at swap
-			-- time from incoming/pending mag section (delay-0 bones use the pending hint)
-
-			-- divide current mag_swap_delay with anim speed so mag_reload_speed is compatible
-			-- guard against zero/negative
-			local anim_speed = anim_table.anm_speed
-			if not anim_speed or anim_speed <= 0 then anim_speed = 1 end
-			mag_swap_delay = mag_swap_delay / anim_speed
-
-			dbg("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
-			CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
-		end
+		schedule_mag_model_swap(obj, anim_table.anm_name, anim_table.anm_speed)
 	else
-		-- if the anim is not a reload then refresh the mag model attachment by calling the function, just in case.
+		-- // NOTE: this may be not needed
+		-- if the anim is not a reload then refresh the mag model attachment by calling the function
 		update_scripted_magazines(obj, {hide_override = true})
 	end
+end
+
+-- Schedule the per-bone model swap for a reload
+function schedule_mag_model_swap(obj, anm_name, anm_speed)
+	if not anm_speed or anm_speed <= 0 then anm_speed = 1 end
+	local obj_section = obj:section()
+	local mag_bone_names = str_explode( (ini_sys:r_string_ex(obj_section, "s_magazine_hide_bones") or ""), ",")
+	for i,name in pairs(mag_bone_names) do
+		-- divide by anim speed so a sped-up reload swaps proportionally earlier
+		local mag_swap_delay = (ini_sys:r_float_ex(obj_section, anm_name .. "_mag_swap_delay") or ini_sys:r_float_ex(obj_section, anm_name .. "_mag_swap_delay_" .. name) or 1.3) / anm_speed
+		time_event_id = time_event_id + 1
+		local configs = {}
+		configs.obj_id = obj:id()
+		configs.bone_to_switch = name
+		-- model_path is left unset on purpose: change_specific_mag_model resolves it at swap
+		-- time from incoming/pending mag section (delay-0 bones use the pending hint)
+		dbg("mag swap delay is %s, bone name is %s", mag_swap_delay, name)
+		CreateTimeEvent("scripted_magazines", "mag_model_swap" .. tostring(time_event_id), mag_swap_delay, change_specific_mag_model, configs)
+	end
+end
+
+-- Inventory drag-drop onto the active weapon reloads in place, but the model swap
+-- normally rides the reload HUD anim
+function on_mag_drag_dropped(item, weapon, from_slot, to_slot)
+	if not (item and weapon and db.actor) then return end
+	local active = db.actor:active_item()
+	if not (active and active:id() == weapon:id()) then return end
+	if not (is_magazine(item) and IsWeapon(weapon) and is_compatible(weapon, item)) then return end
+	if weapon:weapon_in_grenade_mode() then return end
+
+	set_pending_mag_section(mag_section_of(item))
+	local mag_data = get_mag_data(item:id()) or {}
+	set_pending_mag_ammo(mag_data.loaded)
+
+	schedule_mag_model_swap(weapon, "anm_reload", 1)
 end
 
 -- animation_common is the cooperative mutator registry, prefer it when present
@@ -428,6 +445,8 @@ function on_game_start()
 	if not animation_common then
 		RegisterScriptCallback("actor_on_hud_animation_play", actor_on_hud_animation_play)
 	end
+
+	RegisterScriptCallback("ActorMenu_on_item_drag_drop", on_mag_drag_dropped)
 
 	-- Capture the magazine being loaded. Every load path (reload, ammo wheel, QAW,
 	-- inventory drag-drop) funnels through delay_load_weapon. This is the universal
